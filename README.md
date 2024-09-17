@@ -25,9 +25,6 @@ PaperMote is designed for avid readers who want to keep track of their paperbook
 ### Tech Stack
 
 -   Next.js and Tailwind CSS
--   Express and Node.js
--   SQLite and/or MongoDB
--   optional: Docker/Kubernetes
 
 ### APIs
 
@@ -184,7 +181,6 @@ Book
 -   publishedDate
 -   pageCount
 -   image
--   tags
 -   createdAt
 -   updatedAt
 
@@ -233,12 +229,12 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 
 ### Sprint 1: Project Setup and Core Features (Week 1, from Sep 9 to Sep 15)
 -   Day 1-2: Initialize project repository, set up project structure and prepare for background knowledge
-    -   [ ] Set up frontend (React) and backend (Express.js) directories
-    -   [ ] Initialize Git repository and create initial commit
-    -   [ ] Prepare knowledge of tech stack, learn Next.js, Tailwind CSS and SQLite
+    -   [x] Set up frontend and backend directories
+    -   [x] Initialize Git repository and create initial commit
+    -   [x] Prepare knowledge of tech stack
 
 -   Day 3-5: Implement basic frontend and backend
-    -   [ ] Create Express.js server
+    -   [x] Create server
     -   [ ] Set up database connection
     -   [ ] Set up CI/CD pipeline
     -   [ ] Implement basic CRUD operations for Books and Notes
