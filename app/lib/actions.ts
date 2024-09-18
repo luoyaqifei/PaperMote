@@ -1,10 +1,9 @@
 "use server";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
-import { redirect, RedirectType } from "next/navigation";
+import { redirect } from "next/navigation";
 import { AddBookSchema, UpdateUserSchema } from "./schema";
-import { saltAndHashPassword } from "./utils";
-import { LoginModel } from "./definitions";
+import { generateAvatar, saltAndHashPassword } from "./utils";
 import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import { generateFromEmail } from "unique-username-generator";
@@ -24,7 +23,7 @@ export async function signup(prevState: unknown, formData: FormData) {
   try {
     const hashedPassword = await saltAndHashPassword(password);
     const username = generateFromEmail(email);
-    const avatar = `https://api.dicebear.com/5.x/initials/svg?seed=${username}`;
+    const avatar = generateAvatar(username);
     await sql`INSERT INTO users (email, password, username, avatar) VALUES (${email}, ${hashedPassword}, ${username}, ${avatar})`;
   } catch (error) {
     return {
@@ -87,10 +86,9 @@ export async function addBook(formData: FormData) {
 export async function signOutAction() {
   await signOut({redirectTo: "/"});
   revalidatePath("/");
-  // redirect("/login", RedirectType.replace);
 }
 
-export async function updateUser(formData: FormData) {
+export async function updateUser(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
     schema: UpdateUserSchema,
   });
@@ -101,11 +99,8 @@ export async function updateUser(formData: FormData) {
   console.log("submission", submission);
   const { username, email } = submission.value;
   try {
-    const hashedPassword = await saltAndHashPassword(password);
-    const username = generateFromEmail(email);
-    const avatar = `https://api.dicebear.com/5.x/initials/svg?seed=${username}`;
     await sql`UPDATE users 
-    SET (email, password, username, avatar) VALUES (${email}, ${hashedPassword}, ${username}, ${avatar})`;
+    SET (email, username, avatar) VALUES (${email}, ${username}, ${generateAvatar(username)})`;
   } catch (error) {
     return {
       message: "Database Error: Failed to create user",

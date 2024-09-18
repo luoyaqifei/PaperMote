@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { SubmissionResult, useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { useFormState } from "react-dom";
