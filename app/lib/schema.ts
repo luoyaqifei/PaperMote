@@ -11,12 +11,14 @@ const UserSchema = z.object({
 const BookSchema = z.object({
     id: z.string().optional(),
     title: z.string().min(1),
-    author: z.string().optional(),
-    createdAt: z.date().optional(),
-    updatedAt: z.date().optional(),
+    author: z.string().min(1).optional(),
+    description: z.string().min(1).optional(),
+    cover: z.string().url('Cover is URL').optional(),
+    created_at: z.date().optional(),
+    updated_at: z.date().optional(),
 });
 
-export const AddBookSchema = BookSchema.omit({id: true, createdAt: true, updatedAt: true});
+export const AddBookSchema = BookSchema.omit({id: true, created_at: true, updated_at: true});
 export const LoginSchema = UserSchema.omit({id: true, username: true, avatar: true});
 export const SignupSchema = UserSchema.omit({id: true, username: true, avatar: true});
 export const UpdateUserSchema = UserSchema.omit({password: true, avatar: true});

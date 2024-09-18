@@ -11,6 +11,7 @@ import { generateFromEmail } from "unique-username-generator";
 import { parseWithZod } from "@conform-to/zod";
 import { SignupSchema } from "./schema";
 import { User } from "./definitions";
+import { getCurrentUser } from "./data";
 
 export async function signup(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
@@ -52,7 +53,6 @@ export async function authenticate(prevState: unknown, formData: FormData) {
   if (submission.status !== "success") {
     return submission.reply();
   }
-  console.log("submission", submission);
   const { email, password } = submission.value;
   try {
     await signIn("credentials", { email, password, redirectTo: "/dashboard" });
@@ -73,24 +73,32 @@ export async function authenticate(prevState: unknown, formData: FormData) {
   }
 }
 
-export async function addBook(formData: FormData) {
-  const validatedFields = AddBookSchema.safeParse({
-    title: formData.get("title"),
-    author: formData.get("author"),
+export async function addBook(prevState: unknown, formData: FormData) {
+  console.log("formData", formData);
+
+  const submission = parseWithZod(formData, {
+    schema: AddBookSchema,
   });
 
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Please fill in all the required fields.",
-    };
+  if (submission.status !== "success") {
+    return submission.reply();
   }
-  const { title, author } = validatedFields.data;
+  const { title, author } = submission.value;
   const createdAt = new Date().toISOString().split("T")[0];
   const updatedAt = createdAt;
-
+  const user = await getCurrentUser();
+  try {
+    await sql`
+    INSERT INTO books 
+    (title, author, created_at, updated_at, user_id) 
+    VALUES (${title}, ${author}, ${createdAt}, ${updatedAt}, ${user?.id})`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to add book",
+    };
+  }
   revalidatePath("/shelf");
-  redirect("/shelf");
+  // redirect("/shelf");
 }
 
 export async function signOutAction() {
@@ -99,7 +107,6 @@ export async function signOutAction() {
 }
 
 export async function updateUser(prevState: unknown, formData: FormData) {
-  console.log("user profile", formData);
   const submission = parseWithZod(formData, {
     schema: UpdateUserSchema,
   });
@@ -107,7 +114,6 @@ export async function updateUser(prevState: unknown, formData: FormData) {
   if (submission.status !== "success") {
     return submission.reply();
   }
-  console.log("submission", submission);
   const { username, email, id } = submission.value;
   try {
     const users = await sql<User>`

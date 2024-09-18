@@ -5,8 +5,15 @@ import { Book, Note, User } from "./definitions";
 import { auth } from "@/auth";
 
 export const fetchBooks = async () => {
+    const user = await getCurrentUser();
+    if (!user) {
+        return [];
+    }
+    const userId = user.id;
     try {
-        const data = await sql<Book[]>`SELECT * FROM books ORDER BY updated_at DESC`;
+        const data = await sql<Book>`
+        SELECT * FROM books 
+        WHERE user_id = ${userId} ORDER BY updated_at DESC`;
         return data.rows;
     } catch (error) {
         console.error(error);

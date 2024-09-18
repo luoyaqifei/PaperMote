@@ -24,11 +24,13 @@ async function createBooksTable() {
     CREATE TABLE IF NOT EXISTS books (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
-        author VARCHAR(255) NOT NULL,
-        description TEXT NOT NULL,
-        cover TEXT NOT NULL,
+        author VARCHAR(255),
+        description TEXT,
+        cover TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        user_id UUID NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users (id)
     );
     `;
 }
@@ -65,8 +67,16 @@ export async function GET() {
 }
 
 export async function DELETE() {
-    await client.sql`DROP TABLE IF EXISTS users`;
-    await client.sql`DROP TABLE IF EXISTS books`;
-    await client.sql`DROP TABLE IF EXISTS notes`;
-    return Response.json({ message: "Tables deleted successfully" }, { status: 200 });
+    try {
+        await client.sql`BEGIN`;
+        // await client.sql`DROP TABLE IF EXISTS users CASCADE`;
+        await client.sql`DROP TABLE IF EXISTS books CASCADE`;
+        await client.sql`DROP TABLE IF EXISTS notes CASCADE`;
+        await client.sql`COMMIT`;
+        return Response.json({ message: "Tables deleted successfully" }, { status: 200 });
+    } catch (error) {
+        await client.sql`ROLLBACK`;
+        console.error(error);
+        return Response.json({ message: "Error deleting tables", error: error }, { status: 500 });
+    }
 }

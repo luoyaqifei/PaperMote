@@ -57,10 +57,6 @@ export const UserProfileForm = ({ user }: { user: User }) => {
             color="primary"
             className="mt-8"
             type="submit"
-            onClick={() => {
-              console.log(form.value);
-              console.log("clicked");
-            }}
           >
             Save Changes
           </Button>
