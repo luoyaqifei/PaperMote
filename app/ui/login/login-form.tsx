@@ -9,15 +9,10 @@ import { SignupSchema } from "@/app/lib/schema";
 export default function LoginForm() {
   const [lastResult, action] = useFormState(authenticate, undefined);
   const [form, fields] = useForm({
-    // Sync the result of last submission
     lastResult: lastResult as SubmissionResult<string[]> | null,
-
-    // Reuse the validation logic on the client
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: SignupSchema });
     },
-
-    // Validate the form on blur event triggered
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });

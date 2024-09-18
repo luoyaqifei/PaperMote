@@ -8,6 +8,7 @@ import {
   Button,
   Avatar,
   Link,
+  LinkIcon,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { User } from "@/app/lib/definitions";
@@ -27,31 +28,32 @@ export function UserDropdown() {
   return user ? (
     <Dropdown>
       <DropdownTrigger>
-        <Button
-          variant="flat"
-          size="md"
+        <Avatar
+          src={
+            user?.avatar ??
+            "https://api.dicebear.com/9.x/initials/svg?seed=User"
+          }
+          as="button"
+          alt="Avatar"
           className="overflow-hidden rounded-full"
-        >
-          <Avatar
-            src={
-              user?.avatar ??
-              "https://api.dicebear.com/9.x/initials/svg?seed=User"
-            }
-            alt="Avatar"
-            className="overflow-hidden rounded-full"
-          />
-        </Button>
+        />
       </DropdownTrigger>
       <DropdownMenu aria-label="User actions">
-        <DropdownItem key="profile" className="h-14 gap-2">
-          <p className="font-bold">Signed in as</p>
-          <p className="font-bold">{user?.username}</p>
+        <DropdownItem key="profile" className="flex flex-col items-start py-2" isReadOnly>
+          <p className="text-sm text-gray-500">Signed in as</p>
+          <p className="font-semibold text-lg">{user?.username}</p>
         </DropdownItem>
-        <DropdownItem key="settings">Profile</DropdownItem>
-        <DropdownItem key="logout" color="danger">
-          <form action={signOutAction}>
-            <button type="submit">Sign Out</button>
-          </form>
+        <DropdownItem key="settings">
+          <Link href="/dashboard/user-profile">My Profile</Link>
+        </DropdownItem>
+        <DropdownItem
+          key="logout"
+          color="danger"
+          as="button"
+          itemType="submit"
+          onClick={(e) => signOutAction()}
+        >
+          Sign Out
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>

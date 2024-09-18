@@ -1,8 +1,14 @@
-import Image from "next/image";
+import Image from 'next/image';
 
-export const Logo = () => {
+export default function Logo() {
   return (
-    <></>
-    // <Image src="/logo2.svg" alt="PaperMote" width={100} height={100} />
+    <div style={{ width: '50px', height: '50px', position: 'relative' }}>
+      <Image
+        src="/logo.svg"
+        alt="PaperMote Logo"
+        layout="fill"
+        objectFit="contain"
+      />
+    </div>
   );
-};
+}

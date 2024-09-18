@@ -1,8 +1,8 @@
 "use server";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { AddBookSchema } from "./schema";
+import { redirect, RedirectType } from "next/navigation";
+import { AddBookSchema, UpdateUserSchema } from "./schema";
 import { saltAndHashPassword } from "./utils";
 import { LoginModel } from "./definitions";
 import { signIn, signOut } from "@/auth";
@@ -46,7 +46,7 @@ export async function authenticate(prevState: unknown, formData: FormData) {
   console.log("submission", submission);
   const { email, password } = submission.value;
   try {
-    await signIn("credentials", { email, password }, { redirectTo: "/" });
+    await signIn("credentials", { email, password, redirectTo: "/dashboard" });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -85,6 +85,32 @@ export async function addBook(formData: FormData) {
 }
 
 export async function signOutAction() {
-  await signOut();
-  redirect("/");
+  await signOut({redirectTo: "/"});
+  revalidatePath("/");
+  // redirect("/login", RedirectType.replace);
+}
+
+export async function updateUser(formData: FormData) {
+  const submission = parseWithZod(formData, {
+    schema: UpdateUserSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+  console.log("submission", submission);
+  const { username, email } = submission.value;
+  try {
+    const hashedPassword = await saltAndHashPassword(password);
+    const username = generateFromEmail(email);
+    const avatar = `https://api.dicebear.com/5.x/initials/svg?seed=${username}`;
+    await sql`UPDATE users 
+    SET (email, password, username, avatar) VALUES (${email}, ${hashedPassword}, ${username}, ${avatar})`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to create user",
+    };
+  }
+
+  revalidatePath("/dashboard");
 }

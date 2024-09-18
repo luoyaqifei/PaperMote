@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
 const UserSchema = z.object({
-    name: z.string().optional(),
+    username: z.string().min(1, "Username is required"),
     email: z.string().email('Invalid email'),
     password: z.string().min(1, 'Password is required'),
+    avatar: z.string().url('Avatar is URL')
 })
 
 const BookSchema = z.object({
@@ -15,5 +16,6 @@ const BookSchema = z.object({
 });
 
 export const AddBookSchema = BookSchema.omit({id: true, createdAt: true, updatedAt: true});
-export const LoginSchema = UserSchema.omit({name: true});
-export const SignupSchema = UserSchema.omit({name: true});
+export const LoginSchema = UserSchema.omit({username: true});
+export const SignupSchema = UserSchema.omit({username: true, avatar: true});
+export const UpdateUserSchema = UserSchema.omit({password: true, avatar: true});
