@@ -10,6 +10,3 @@ export const verifyPassword = (password: string, hash: string) => {
     return bcrypt.compareSync(password, hash);
 }
 
-export const generateAvatar = (username: string) => {
-    return `https://api.dicebear.com/5.x/initials/svg?seed=${username}`;
-}

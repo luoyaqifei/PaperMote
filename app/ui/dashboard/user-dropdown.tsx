@@ -8,20 +8,28 @@ import {
   Button,
   Avatar,
   Link,
-  LinkIcon,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { User } from "@/app/lib/definitions";
 import { signOutAction } from "@/app/lib/actions";
+import { generateAvatar } from "@/app/lib/client-utils";
 export function UserDropdown() {
   const [user, setUser] = useState<User | null>(null);
   const [pending, setPending] = useState(true);
   useEffect(() => {
-    getCurrentUser().then((userData) => {
-      setUser(userData);
-      setPending(false);
-    });
+    const fetchUser = async () => {
+      try {
+        const userData = await getCurrentUser();
+        setUser(userData as User);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      } finally {
+        setPending(false);
+      }
+    };
+    fetchUser();
   }, []);
+
   if (pending) {
     return <div>Loading...</div>;
   }
@@ -31,7 +39,7 @@ export function UserDropdown() {
         <Avatar
           src={
             user?.avatar ??
-            "https://api.dicebear.com/9.x/initials/svg?seed=User"
+            generateAvatar(user.username)
           }
           as="button"
           alt="Avatar"

@@ -1,5 +1,5 @@
-import SignupForm from "../ui/login/signup-form";
+import LoginOrSignupForm from "../ui/loginOrSignup/login-signup-form";
 
 export default function Signup() {
-  return <SignupForm />;
+  return <LoginOrSignupForm isLogin={false} />;
 }

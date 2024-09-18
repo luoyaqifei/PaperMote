@@ -1,10 +1,11 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials"
-import { getUser } from "./app/lib/data";
+import { getUserByEmail, getUserById } from "./app/lib/data";
 import { verifyPassword } from "./app/lib/utils";
 import { authConfig } from "./auth.config";
+import { User } from "./app/lib/definitions";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
@@ -16,7 +17,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       async authorize(credentials) {
         console.log("credentials", credentials);
         const { email, password } = credentials;
-        const user = await getUser(email as string);
+        const user = await getUserByEmail(email as string);
         if (!user) {
           throw new Error("No user found with that email");
         }
@@ -30,4 +31,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      console.log("token", token);
+      if (!token.sub) return session;
+      const user: User | null = await getUserById(token.sub);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      session.user = {...session.user, ...user};
+      console.log("session", session);
+      return session;
+    },
+  },
 });

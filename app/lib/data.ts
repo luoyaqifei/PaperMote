@@ -31,9 +31,19 @@ export const fetchNotes = async (bookId: string) => {
     }
 }
 
-export const getUser = async (email: string) => {
+export const getUserByEmail = async (email: string) => {
     try {
         const data = await sql<User>`SELECT * FROM users WHERE email = ${email} LIMIT 1`;
+        return data.rows[0];
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export const getUserById = async (id: string) => {
+    try {
+        const data = await sql<User>`SELECT * FROM users WHERE id = ${id} LIMIT 1`;
         return data.rows[0];
     } catch (error) {
         console.error(error);
@@ -47,6 +57,5 @@ export const getCurrentUser = async () => {
     if (!user) {
         return null;
     }
-    const userFromDb = await getUser(user.email as string);
-    return userFromDb;
+    return user;
 }
