@@ -1,5 +1,5 @@
 import NoteList from "@/app/ui/book/note-list";
-import AddNote from "@/app/ui/book/add-note";
+import AddNote from "@/app/ui/note/add-note";
 import BookCard from "@/app/ui/book/book-card";
 
 export default async function BookPage({ params }) {

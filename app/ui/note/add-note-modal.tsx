@@ -13,7 +13,7 @@ import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { useFormState } from "react-dom";
 import { AddNoteSchema } from "@/app/lib/schema";
-import Editor from "../note/editor";
+import Editor from "./editor";
 
 export default function AddNoteModal({
   isOpen,
@@ -50,10 +50,10 @@ export default function AddNoteModal({
       onOpenChange={onOpenChange} 
       placement="top-center"
       classNames={{
-        base: "bg-teal-50",
+        base: "bg-white",
         header: "bg-teal-600 text-white",
         body: "py-6",
-        footer: "bg-teal-100"
+        footer: "bg-white"
       }}
     >
       <form onSubmit={handleSubmit}>
@@ -66,6 +66,7 @@ export default function AddNoteModal({
               {...fields.title}
               classNames={{
                 input: "bg-white",
+                inputWrapper: "bg-white border border-gray-300 hover:border-teal-500 focus-within:border-teal-500",
                 label: "text-teal-600"
               }}
             />
@@ -76,12 +77,12 @@ export default function AddNoteModal({
                 contentInput.type = 'hidden';
                 contentInput.name = 'content';
                 contentInput.value = content;
-                fields.content.value = content;
+                // form.ref.current?.appendChild(contentInput);
               }}
             />
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="flat" onPress={onClose}>
+            <Button color="default" variant="light" onPress={onClose}>
               Close
             </Button>
             <Button color="primary" type="submit" className="bg-teal-600 hover:bg-teal-700">

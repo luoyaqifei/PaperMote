@@ -6,11 +6,11 @@ import {
   Link,
 } from "@nextui-org/react";
 import Logo from "./logo";
-import { UserDropdown } from "./user-dropdown";
+import { UserDropdown } from "../user/user-dropdown";
 import { getCurrentUser } from "@/app/lib/data";
 
 export default async function Sidenav() {
-  const user = await getCurrentUser();
+  const user: any = await getCurrentUser();
   return (
     <Navbar isBordered maxWidth="full" className="bg-teal-600 text-white">
       <NavbarBrand>
@@ -21,9 +21,7 @@ export default async function Sidenav() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="/dashboard/shelf" className="text-white hover:text-teal-200">
-            Books
-          </Link>
+          placeholder
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">

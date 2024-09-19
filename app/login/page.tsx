@@ -1,4 +1,4 @@
-import LoginOrSignupForm from "@/app/ui/loginOrSignup/login-signup-form";
+import LoginOrSignupForm from "@/app/ui/user/login-signup-form";
 import { Card } from "@nextui-org/react";
 
 export default function Login() {

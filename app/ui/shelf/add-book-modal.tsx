@@ -9,10 +9,11 @@ import {
   ModalFooter,
   Input,
 } from "@nextui-org/react";
-import { useForm } from "@conform-to/react";
+import { SubmissionResult, useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { AddBookSchema } from "@/app/lib/schema";
+import { useToast } from "@/app/lib/hooks";
 
 export default function AddBookModal({
   isOpen,
@@ -23,22 +24,28 @@ export default function AddBookModal({
   onOpenChange: () => void;
   onClose: () => void;
 }) {
+  const [lastResult, action] = useFormState(addBook, undefined);
+  const {pending} = useFormStatus();
   const [form, fields] = useForm({
+    lastResult: lastResult as SubmissionResult<string[]> | null,
     onValidate({ formData }) {
-      return parseWithZod(formData, { schema: AddBookSchema });
+      console.log("formData", formData);
+      const result = parseWithZod(formData, { schema: AddBookSchema });
+      console.log("result", result);
+      return result;
     },
     shouldValidate: "onBlur",
-    shouldRevalidate: "onInput",
+    shouldRevalidate: "onSubmit",
   });
 
-  const [state, formAction] = useFormState(addBook, null);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    formAction(formData);
+    e.currentTarget.form?.requestSubmit();
     onClose();
   };
+
+  useToast(lastResult as SubmissionResult<string[]> | null);
+
 
   return (
     <Modal 
@@ -52,27 +59,34 @@ export default function AddBookModal({
         footer: "bg-white"
       }}
     >
-      <form onSubmit={handleSubmit}>
+      <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">New Book</ModalHeader>
           <ModalBody>
             <Input
               label="Title"
               placeholder="Enter book title"
-              {...fields.title}
+              autoFocus
+              defaultValue={fields.title.value}
+              key={fields.title.key}
+              name={fields.title.name}
+              variant="bordered"
               classNames={{
                 input: "bg-white",
-                inputWrapper: "bg-white border border-gray-300 hover:border-teal-500 focus-within:border-teal-500",
+                inputWrapper: "bg-white border focus-within:border-teal-500",
                 label: "text-teal-600"
               }}
             />
             <Input
               label="Author"
               placeholder="Enter book author"
-              {...fields.author}
+              defaultValue={fields.author.value}
+              key={fields.author.key}
+              name={fields.author.name}
+              variant="bordered"
               classNames={{
                 input: "bg-white",
-                inputWrapper: "bg-white border border-gray-300 hover:border-teal-500 focus-within:border-teal-500",
+                inputWrapper: "bg-white border focus-within:border-teal-500",
                 label: "text-teal-600"
               }}
             />
@@ -81,7 +95,7 @@ export default function AddBookModal({
             <Button color="default" variant="light" onPress={onClose}>
               Close
             </Button>
-            <Button color="primary" type="submit" className="bg-teal-600 hover:bg-teal-700">
+            <Button disabled={pending} color="primary" type="submit" className="bg-teal-600 hover:bg-teal-700" onClick={handleClick}>
               Add Book
             </Button>
           </ModalFooter>

@@ -68,6 +68,7 @@ export async function authenticate(prevState: unknown, formData: FormData) {
         default:
           return {
             message: "Something went wrong",
+            status: "error"
           };
       }
     }
@@ -79,6 +80,7 @@ export async function signOutAction() {
   await signOut({redirectTo: "/"});
   revalidateTag("user");
   revalidatePath("/");
+  return { message: "Signed out successfully", status: "success" };
 }
 
 export async function updateUser(prevState: unknown, formData: FormData) {
@@ -108,8 +110,6 @@ export async function updateUser(prevState: unknown, formData: FormData) {
 }
 
 export async function addBook(prevState: unknown, formData: FormData) {
-  console.log("formData", formData);
-
   const submission = parseWithZod(formData, {
     schema: AddBookSchema,
   });
@@ -118,25 +118,27 @@ export async function addBook(prevState: unknown, formData: FormData) {
     return submission.reply();
   }
   const { title, author } = submission.value;
-  const createdAt = new Date().toISOString().split("T")[0];
+  const createdAt = new Date().toISOString();
   const updatedAt = createdAt;
   const user = await getCurrentUser();
+  let book_id: string;
   try {
-    await sql`
+    const books = await sql`
     INSERT INTO books 
     (title, author, created_at, updated_at, user_id) 
-    VALUES (${title}, ${author}, ${createdAt}, ${updatedAt}, ${user?.id})`;
+    VALUES (${title}, ${author}, ${createdAt}, ${updatedAt}, ${user?.id}) RETURNING *`;
+    book_id = books.rows[0].id;
   } catch (error) {
     return {
       message: "Database Error: Failed to add book",
       status: "error"
     };
   }
-  revalidatePath("/shelf");
-  return { message: "Book added successfully", status: "success" };
+  revalidatePath("/dashboard");
+  return { message: `Book ${title} added successfully`, status: "success", book_id };
 }
 
-export async function addNote(prevState: any, formData: FormData) {
+export async function addNote(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
     schema: AddNoteSchema,
   });

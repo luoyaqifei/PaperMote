@@ -7,8 +7,7 @@ import { useForm, SubmissionResult } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { Avatar, Button, Input } from "@nextui-org/react";
 import { useFormState } from "react-dom";
-import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useToast } from "@/app/lib/hooks";
 
 export const UserProfileForm = ({ user }: { user: User }) => {
   const [lastResult, action] = useFormState(updateUser, undefined);
@@ -25,15 +24,8 @@ export const UserProfileForm = ({ user }: { user: User }) => {
       username: user?.username,
     },
   });
-  useEffect(() => {
-    if (lastResult && 'message' in lastResult) {
-      if (lastResult.status === "error") {
-        toast.error(lastResult.message);
-      } else {
-        toast.success(lastResult.message);
-      }
-    }
-  }, [lastResult]);
+  useToast(lastResult as SubmissionResult<string[]> | null);
+
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6 text-teal-600">User Profile</h1>

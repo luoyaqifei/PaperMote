@@ -16,18 +16,13 @@ import { generateAvatar } from "@/app/lib/client-utils";
 import { useRouter } from "next/navigation";
 
 export function UserDropdown({ user }: { user: User }) {
-  const router = useRouter();
-
   const handleSignOut = async () => {
     try {
       await signOutAction();
-      router.push("/");
     } catch (error) {
       console.error("Error signing out:", error);
     }
   };
-
-
 
   return user ? (
     <Dropdown>
@@ -43,8 +38,8 @@ export function UserDropdown({ user }: { user: User }) {
           <p className="font-semibold">Signed in as</p>
           <p className="font-semibold">{user?.username}</p>
         </DropdownItem>
-        <DropdownItem key="settings">
-          <Link href="/dashboard/user-profile">My Profile</Link>
+        <DropdownItem key="settings" as={Link} href="/dashboard/user-profile">
+          My Profile
         </DropdownItem>
         <DropdownItem key="logout" color="danger" onPress={handleSignOut}>
           Sign Out

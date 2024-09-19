@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Instruction from "./ui/dashboard/Instruction";
+import Instruction from "@/app/ui/dashboard/instruction";
 import { Button, Card } from "@nextui-org/react";
 import Image from "next/image";
 
@@ -22,18 +22,12 @@ export default function App() {
         </div>
         <div className="bg-white p-8">
           <div className="flex justify-center space-x-4 mb-8">
-            <Link href="/login" passHref>
-              <Button as="a" color="primary" size="lg">Login</Button>
-            </Link>
-            <Link href="/signup" passHref>
-              <Button as="a" color="secondary" size="lg">Signup</Button>
-            </Link>
+            <Button as="a" href="/login" color="primary" size="lg">Login</Button>
+            <Button as="a" href="/signup" color="secondary" size="lg">Signup</Button>
           </div>
           <Instruction />
           <div className="mt-8 text-center">
-            <Link href="/about-me" passHref>
-              <Button as="a" color="primary" variant="light">About Me</Button>
-            </Link>
+            <Button as="a" href="/about-me" color="primary" variant="light">About Me</Button>
           </div>
         </div>
       </div>
