@@ -7,8 +7,10 @@ import {
 } from "@nextui-org/react";
 import Logo from "./logo";
 import { UserDropdown } from "./user-dropdown";
+import { getCurrentUser } from "@/app/lib/data";
 
-export default function Sidenav() {
+export default async function Sidenav() {
+  const user = await getCurrentUser();
   return (
     <Navbar isBordered maxWidth="full" className="bg-teal-600 text-white">
       <NavbarBrand>
@@ -25,7 +27,7 @@ export default function Sidenav() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <UserDropdown />
+        <UserDropdown user={user} />
       </NavbarContent>
     </Navbar>
   );

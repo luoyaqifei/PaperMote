@@ -15,24 +15,8 @@ import { signOutAction } from "@/app/lib/actions";
 import { generateAvatar } from "@/app/lib/client-utils";
 import { useRouter } from "next/navigation";
 
-export function UserDropdown() {
-  const [user, setUser] = useState<User | null>(null);
-  const [pending, setPending] = useState(true);
+export function UserDropdown({ user }: { user: User }) {
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userData = await getCurrentUser();
-        setUser(userData as User);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      } finally {
-        setPending(false);
-      }
-    };
-    fetchUser();
-  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -43,9 +27,7 @@ export function UserDropdown() {
     }
   };
 
-  if (pending) {
-    return <Button isLoading variant="light">Loading...</Button>;
-  }
+
 
   return user ? (
     <Dropdown>

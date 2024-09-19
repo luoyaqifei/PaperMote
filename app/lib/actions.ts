@@ -2,7 +2,7 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
-import { AddBookSchema, AddNoteSchema, UpdateUserSchema } from "./schema";
+import { AddBookSchema, AddNoteSchema, LoginSchema, UpdateUserSchema } from "./schema";
 import { saltAndHashPassword } from "./utils";
 import { generateAvatar } from "./client-utils";
 import { auth, signIn, signOut, unstable_update } from "@/auth";
@@ -30,24 +30,25 @@ export async function signup(prevState: unknown, formData: FormData) {
           email: ["User already exists"],
         },
         message: "User already exists",
+        status: "error"
       };
     }
-    const hashedPassword = await saltAndHashPassword(password);
+    const hashedPassword = saltAndHashPassword(password);
     const username = generateFromEmail(email);
     const avatar = generateAvatar(username);
     await sql`INSERT INTO users (email, password, username, avatar) VALUES (${email}, ${hashedPassword}, ${username}, ${avatar})`;
   } catch (error) {
     return {
       message: "Database Error: Failed to create user",
+      status: "error"
     };
   }
-
-  redirect("/dashboard");
+  await signIn("credentials", { email, password, redirectTo: "/dashboard" });
 }
 
 export async function authenticate(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
-    schema: SignupSchema,
+    schema: LoginSchema,
   });
 
   if (submission.status !== "success") {
@@ -61,7 +62,8 @@ export async function authenticate(prevState: unknown, formData: FormData) {
       switch (error.type) {
         case "CredentialsSignin":
           return {
-            message: "Invalid credentials",
+            message: "Invalid credentials", 
+            status: "error"
           };
         default:
           return {
@@ -71,6 +73,38 @@ export async function authenticate(prevState: unknown, formData: FormData) {
     }
     throw error;
   }
+}
+
+export async function signOutAction() {
+  await signOut({redirectTo: "/"});
+  revalidateTag("user");
+  revalidatePath("/");
+}
+
+export async function updateUser(prevState: unknown, formData: FormData) {
+  const submission = parseWithZod(formData, {
+    schema: UpdateUserSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+  const { username, email, id } = submission.value;
+  try {
+    const users = await sql<User>`
+    UPDATE users 
+    SET email = ${email}, username = ${username}, avatar = ${generateAvatar(username)}
+    WHERE id = ${id} RETURNING *`;
+    unstable_update({user: users.rows[0]});
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to update user",
+      error: JSON.parse(JSON.stringify(error))
+    };
+  }
+  revalidateTag("user");
+  revalidatePath("/dashboard/user-profile");
+  return { message: "User updated successfully", status: "success" };
 }
 
 export async function addBook(prevState: unknown, formData: FormData) {
@@ -95,10 +129,11 @@ export async function addBook(prevState: unknown, formData: FormData) {
   } catch (error) {
     return {
       message: "Database Error: Failed to add book",
+      status: "error"
     };
   }
   revalidatePath("/shelf");
-  // redirect("/shelf");
+  return { message: "Book added successfully", status: "success" };
 }
 
 export async function addNote(prevState: any, formData: FormData) {
@@ -120,40 +155,10 @@ export async function addNote(prevState: any, formData: FormData) {
   } catch (error) {
     return {
       message: "Database Error: Failed to add note",
+      status: "error"
     };
   }
 
   revalidatePath(`/dashboard/books/${book_id}`);
-  return { message: "Note added successfully" };
-}
-
-export async function signOutAction() {
-  await signOut({redirectTo: "/"});
-  revalidateTag("user");
-  revalidatePath("/");
-}
-
-export async function updateUser(prevState: unknown, formData: FormData) {
-  const submission = parseWithZod(formData, {
-    schema: UpdateUserSchema,
-  });
-
-  if (submission.status !== "success") {
-    return submission.reply();
-  }
-  const { username, email, id } = submission.value;
-  try {
-    const users = await sql<User>`
-    UPDATE users 
-    SET email = ${email}, username = ${username}, avatar = ${generateAvatar(username)}
-    WHERE id = ${id} RETURNING *`;
-    await unstable_update({user: users.rows[0]});
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to update user",
-    };
-  }
-
-  revalidatePath("/");
-  redirect("/");
+  return { message: "Note added successfully", status: "success" };
 }

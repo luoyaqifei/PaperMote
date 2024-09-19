@@ -5,7 +5,11 @@ import { nextui } from '@nextui-org/react';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+// @ts-check
+ 
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
     webpack: (config, { isServer }) => {
         if (!isServer) {
