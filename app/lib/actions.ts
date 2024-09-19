@@ -2,7 +2,7 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { AddBookSchema, UpdateUserSchema } from "./schema";
+import { AddBookSchema, AddNoteSchema, UpdateUserSchema } from "./schema";
 import { saltAndHashPassword } from "./utils";
 import { generateAvatar } from "./client-utils";
 import { auth, signIn, signOut, unstable_update } from "@/auth";
@@ -99,6 +99,18 @@ export async function addBook(prevState: unknown, formData: FormData) {
   }
   revalidatePath("/shelf");
   // redirect("/shelf");
+}
+
+export async function addNote(prevState: unknown, formData: FormData) {
+  const submission = parseWithZod(formData, {
+    schema: AddNoteSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+  const { title, content, book_id } = submission.value;
+  console.log("formData", formData);
 }
 
 export async function signOutAction() {

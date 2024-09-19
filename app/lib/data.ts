@@ -30,7 +30,7 @@ export const searchBooksFromApi = async (query: string) => {
 
 export const fetchNotes = async (bookId: string) => {
     try {
-        const data = await sql<Note[]>`SELECT * FROM notes WHERE book_id = ${bookId}`;
+        const data = await sql<Note>`SELECT * FROM notes WHERE book_id = ${bookId}`;
         return data.rows;
     } catch (error) {
         console.error(error);

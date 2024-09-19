@@ -16,9 +16,21 @@ const BookSchema = z.object({
     cover: z.string().url('Cover is URL').optional(),
     created_at: z.date().optional(),
     updated_at: z.date().optional(),
+    user_id: z.string().optional(),
+});
+
+const NoteSchema = z.object({
+    //TODO: change
+    id: z.string().optional(),
+    title: z.string().min(1).optional(),
+    content: z.string().min(1),
+    created_at: z.date().optional(),
+    updated_at: z.date().optional(),
+    book_id: z.string().optional(),
 });
 
 export const AddBookSchema = BookSchema.omit({id: true, created_at: true, updated_at: true});
+export const AddNoteSchema = NoteSchema.omit({id: true, created_at: true, updated_at: true});
 export const LoginSchema = UserSchema.omit({id: true, username: true, avatar: true});
 export const SignupSchema = UserSchema.omit({id: true, username: true, avatar: true});
 export const UpdateUserSchema = UserSchema.omit({password: true, avatar: true});
