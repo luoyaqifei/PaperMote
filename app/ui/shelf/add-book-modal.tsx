@@ -9,9 +9,9 @@ import {
   ModalFooter,
   Input,
 } from "@nextui-org/react";
-import { SubmissionResult, useForm } from "@conform-to/react";
+import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import { AddBookSchema } from "@/app/lib/schema";
 
 export default function AddBookModal({
@@ -23,72 +23,67 @@ export default function AddBookModal({
   onOpenChange: () => void;
   onClose: () => void;
 }) {
-  const [lastResult, action] = useFormState(addBook, undefined);
-  const { pending } = useFormStatus();
   const [form, fields] = useForm({
-    lastResult: lastResult as SubmissionResult<string[]> | null,
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: AddBookSchema });
     },
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const [state, formAction] = useFormState(addBook, null);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    e.currentTarget.form?.requestSubmit();
+    const formData = new FormData(e.currentTarget);
+    formAction(formData);
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
-      <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
+    <Modal 
+      isOpen={isOpen} 
+      onOpenChange={onOpenChange} 
+      placement="top-center"
+      classNames={{
+        base: "bg-white",
+        header: "bg-teal-600 text-white",
+        body: "py-6",
+        footer: "bg-white"
+      }}
+    >
+      <form onSubmit={handleSubmit}>
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">New Book</ModalHeader>
           <ModalBody>
             <Input
-              key={fields.title.key}
-              name={fields.title.name}
-              defaultValue={fields.title.initialValue as string}
-              autoFocus
               label="Title"
-              placeholder="Title of the book"
-              variant="bordered"
-              isInvalid={!!fields.title.errors}
-              errorMessage={fields.title.errors}
+              placeholder="Enter book title"
+              {...fields.title}
+              classNames={{
+                input: "bg-white",
+                inputWrapper: "bg-white border border-gray-300 hover:border-teal-500 focus-within:border-teal-500",
+                label: "text-teal-600"
+              }}
             />
             <Input
-              key={fields.author.key}
-              name={fields.author.name}
-              defaultValue={fields.author.initialValue as string}
               label="Author"
-              placeholder="Author of the book"
-              variant="bordered"
-              isInvalid={!!fields.author.errors}
-              errorMessage={fields.author.errors}
+              placeholder="Enter book author"
+              {...fields.author}
+              classNames={{
+                input: "bg-white",
+                inputWrapper: "bg-white border border-gray-300 hover:border-teal-500 focus-within:border-teal-500",
+                label: "text-teal-600"
+              }}
             />
           </ModalBody>
           <ModalFooter>
-            <Button
-              color="danger"
-              variant="flat"
-              onPress={onClose}
-              type="button"
-            >
+            <Button color="default" variant="light" onPress={onClose}>
               Close
             </Button>
-            <Button
-              color="primary"
-              type="submit"
-              isDisabled={pending}
-              onEnded={onClose}
-              onClick={handleClick}
-            >
+            <Button color="primary" type="submit" className="bg-teal-600 hover:bg-teal-700">
               Add Book
             </Button>
-            <div>{form.errors}</div>
-            {lastResult && "message" in lastResult && (
-              <div className="text-red-500 mt-2">{lastResult.message}</div>
-            )}
           </ModalFooter>
         </ModalContent>
       </form>

@@ -10,21 +10,21 @@ import { UserDropdown } from "./user-dropdown";
 
 export default function Sidenav() {
   return (
-    <Navbar isBordered>
+    <Navbar isBordered maxWidth="full" className="bg-teal-600 text-white">
       <NavbarBrand>
-        <Link href="/">
+        <Link href="/" className="flex items-center text-white">
           <Logo />
-          <p className="font-bold text-inherit">PaperMote</p>
+          <p className="font-bold text-inherit ml-2">PaperMote</p>
         </Link>
       </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden sm:flex" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/dashboard/shelf" className="text-white hover:text-teal-200">
             Books
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent as="div" justify="end">
+      <NavbarContent justify="end">
         <UserDropdown />
       </NavbarContent>
     </Navbar>

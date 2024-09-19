@@ -26,7 +26,7 @@ export default function UserProfile() {
 	}, []);
 
 	if (!user) {
-		return <div>Loading...</div>;
+		return <div className="text-center py-8">Loading...</div>;
 	}
 
 	return user && <UserProfileForm user={user}/>

@@ -27,10 +27,20 @@ export const searchBooksFromApi = async (query: string) => {
     return data;
 }
 
+export const fetchBook = async (bookId: string) => {
+    try {
+        const data = await sql<Book>`SELECT * FROM books WHERE id=${bookId} LIMIT 1`;
+        console.log(data.rows[0]);
+        return data.rows[0];
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
 
 export const fetchNotes = async (bookId: string) => {
     try {
-        const data = await sql<Note>`SELECT * FROM notes WHERE book_id = ${bookId}`;
+        const data = await sql<Note>`SELECT * FROM notes WHERE book_id=${bookId}`;
         return data.rows;
     } catch (error) {
         console.error(error);
@@ -40,7 +50,7 @@ export const fetchNotes = async (bookId: string) => {
 
 export const getUserByEmail = async (email: string) => {
     try {
-        const data = await sql<User>`SELECT * FROM users WHERE email = ${email} LIMIT 1`;
+        const data = await sql<User>`SELECT * FROM users WHERE email=${email} LIMIT 1`;
         return data.rows[0];
     } catch (error) {
         console.error(error);
@@ -50,7 +60,7 @@ export const getUserByEmail = async (email: string) => {
 
 export const getUserById = async (id: string) => {
     try {
-        const data = await sql<User>`SELECT * FROM users WHERE id = ${id} LIMIT 1`;
+        const data = await sql<User>`SELECT * FROM users WHERE id=${id} LIMIT 1`;
         return data.rows[0];
     } catch (error) {
         console.error(error);

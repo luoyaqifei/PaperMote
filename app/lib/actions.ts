@@ -1,6 +1,6 @@
 "use server";
 import { sql } from "@vercel/postgres";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { AddBookSchema, AddNoteSchema, UpdateUserSchema } from "./schema";
 import { saltAndHashPassword } from "./utils";
@@ -101,7 +101,7 @@ export async function addBook(prevState: unknown, formData: FormData) {
   // redirect("/shelf");
 }
 
-export async function addNote(prevState: unknown, formData: FormData) {
+export async function addNote(prevState: any, formData: FormData) {
   const submission = parseWithZod(formData, {
     schema: AddNoteSchema,
   });
@@ -110,11 +110,26 @@ export async function addNote(prevState: unknown, formData: FormData) {
     return submission.reply();
   }
   const { title, content, book_id } = submission.value;
-  console.log("formData", formData);
+  
+  // Add the note to the database
+  try {
+    await sql`
+      INSERT INTO notes (title, content, book_id)
+      VALUES (${title}, ${content}, ${book_id})
+    `;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to add note",
+    };
+  }
+
+  revalidatePath(`/dashboard/books/${book_id}`);
+  return { message: "Note added successfully" };
 }
 
 export async function signOutAction() {
   await signOut({redirectTo: "/"});
+  revalidateTag("user");
   revalidatePath("/");
 }
 

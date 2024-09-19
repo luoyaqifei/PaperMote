@@ -1,12 +1,14 @@
+import { Card } from "@nextui-org/react";
+
 export default function Instruction() {
   return (
-    <div>
-      <h2 className="text-lg font-semibold">How it works</h2>
-      <ol className="list-inside list-decimal text-sm text-center sm:text-left">
-        <li>Sign up</li>
-        <li>Add books</li>
-        <li>Take notes</li>
+    <Card className="p-6 bg-white">
+      <h2 className="text-lg font-semibold mb-4">How it works</h2>
+      <ol className="list-inside list-decimal text-sm">
+        <li className="mb-2">Sign up</li>
+        <li className="mb-2">Add books</li>
+        <li className="mb-2">Take notes</li>
       </ol>
-    </div>
+    </Card>
   );
 }

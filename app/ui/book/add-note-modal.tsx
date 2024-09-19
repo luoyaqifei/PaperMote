@@ -9,9 +9,9 @@ import {
   ModalFooter,
   Input,
 } from "@nextui-org/react";
-import { SubmissionResult, useForm } from "@conform-to/react";
+import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import { AddNoteSchema } from "@/app/lib/schema";
 import Editor from "../note/editor";
 
@@ -26,49 +26,67 @@ export default function AddNoteModal({
   onClose: () => void;
   bookId: string;
 }) {
-  const [lastResult, action] = useFormState(addNote, undefined);
-  const { pending } = useFormStatus();
   const [form, fields] = useForm({
-    lastResult: lastResult as SubmissionResult<string[]> | null,
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: AddNoteSchema });
     },
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const [state, formAction] = useFormState(addNote, null);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    e.currentTarget.form?.requestSubmit();
+    const formData = new FormData(e.currentTarget);
+    formData.append('book_id', bookId);
+    formAction(formData);
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
-      <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
+    <Modal 
+      isOpen={isOpen} 
+      onOpenChange={onOpenChange} 
+      placement="top-center"
+      classNames={{
+        base: "bg-teal-50",
+        header: "bg-teal-600 text-white",
+        body: "py-6",
+        footer: "bg-teal-100"
+      }}
+    >
+      <form onSubmit={handleSubmit}>
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">New Note</ModalHeader>
           <ModalBody>
-            <Editor/>
+            <Input
+              label="Title"
+              placeholder="Enter note title"
+              {...fields.title}
+              classNames={{
+                input: "bg-white",
+                label: "text-teal-600"
+              }}
+            />
+            <Editor
+              content=""
+              onUpdate={(content) => {
+                const contentInput = document.createElement('input');
+                contentInput.type = 'hidden';
+                contentInput.name = 'content';
+                contentInput.value = content;
+                fields.content.value = content;
+              }}
+            />
           </ModalBody>
           <ModalFooter>
-            <Button
-              color="danger"
-              variant="flat"
-              onPress={onClose}
-              type="button"
-            >
+            <Button color="danger" variant="flat" onPress={onClose}>
               Close
             </Button>
-            <Button
-              color="primary"
-              type="submit"
-              isDisabled={pending}
-              onEnded={onClose}
-              onClick={handleClick}
-            >
-              Add Book
+            <Button color="primary" type="submit" className="bg-teal-600 hover:bg-teal-700">
+              Add Note
             </Button>
-            <div>{form.errors}</div>
           </ModalFooter>
         </ModalContent>
       </form>
