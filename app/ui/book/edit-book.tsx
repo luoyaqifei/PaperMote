@@ -24,10 +24,7 @@ export default function EditBook({ book }: { book: Book }) {
   const [form, fields] = useForm({
     lastResult: lastResult as SubmissionResult<string[]> | null,
     onValidate({ formData }) {
-      console.log("onValidate called");
-      const result = parseWithZod(formData, { schema: UpdateBookSchema });
-      console.log(result);
-      return result;
+      return parseWithZod(formData, { schema: UpdateBookSchema });
     },
     shouldValidate: "onBlur",
     shouldRevalidate: "onSubmit",

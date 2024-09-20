@@ -25,7 +25,6 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
         if (!isPasswordValid) {
           throw new Error("Invalid password");
         }
-        console.log("Logged-in user", user);
         return user;
       },
     }),

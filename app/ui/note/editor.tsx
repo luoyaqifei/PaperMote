@@ -6,7 +6,7 @@ import Image from '@tiptap/extension-image';
 import { 
 	BoldIcon, 
 	ItalicIcon, 
-	QrCodeIcon
+	PhotoIcon
 } from "@heroicons/react/24/solid";
 import {
 	StrikethroughIcon,
@@ -27,7 +27,6 @@ export default function Editor({ content, onUpdate }:
 		},
 		immediatelyRender: false,
 		onUpdate: ({ editor }) => {
-            console.log(editor.getHTML());
 			onUpdate(editor.getHTML());
 		},
 	});
@@ -41,7 +40,7 @@ export default function Editor({ content, onUpdate }:
 
 	return (
 		<Card className="p-4 bg-white shadow-md">
-			<div className="flex gap-2 mb-4">
+			<div className="flex flex-wrap gap-2 mb-4">
 				<Button
 					size="sm"
 					color={editor?.isActive('bold') ? 'primary' : 'default'}
@@ -49,7 +48,32 @@ export default function Editor({ content, onUpdate }:
 				>
 					Bold
 				</Button>
-				{/* Add more formatting buttons here */}
+				<Button
+					size="sm"
+					color={editor?.isActive('italic') ? 'primary' : 'default'}
+					onClick={() => editor?.chain().focus().toggleItalic().run()}
+				>
+					<ItalicIcon className="w-4 h-4" />
+				</Button>
+				<Button
+					size="sm"
+					color={editor?.isActive('strike') ? 'primary' : 'default'}
+					onClick={() => editor?.chain().focus().toggleStrike().run()}
+				>
+					<StrikethroughIcon className="w-4 h-4" />
+				</Button>
+				<Button
+					size="sm"
+					onClick={() => editor?.chain().focus().undo().run()}
+				>
+					<ArrowUturnLeftIcon className="w-4 h-4" />
+				</Button>
+				<Button
+					size="sm"
+					onClick={() => editor?.chain().focus().redo().run()}
+				>
+					<ArrowUturnRightIcon className="w-4 h-4" />
+				</Button>
 			</div>
 			<div className="prose max-w-none h-64 overflow-y-auto">
 				<EditorContent editor={editor} className="h-full min-h-[200px] border border-teal-200 rounded p-2" />

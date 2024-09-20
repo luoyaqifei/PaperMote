@@ -182,7 +182,6 @@ export async function updateBookFromApi(book: BookFromApi, book_id: string) {
 }
 
 export async function updateBook(prevState: unknown, formData: FormData) {
-  console.log("updateBook called");
   const submission = parseWithZod(formData, {
     schema: UpdateBookSchema,
   });
@@ -198,7 +197,6 @@ export async function updateBook(prevState: unknown, formData: FormData) {
       SET title = ${title}, author = ${author}, description = ${description}, updated_at = ${updated_at}
       WHERE id = ${id}
     `;
-    console.log("updateBook succeeded");
   } catch (error) {
     return {
       message: "Database Error: Failed to update book",

@@ -32,9 +32,7 @@ export default function AddNoteModal({
   const [form, fields] = useForm({
     lastResult: lastResult as SubmissionResult<string[]> | null,
     onValidate({ formData }) {
-      const result = parseWithZod(formData, { schema: AddNoteSchema });
-      console.log(result);
-      return result;
+      return parseWithZod(formData, { schema: AddNoteSchema });
     },
     shouldValidate: "onBlur",
     shouldRevalidate: "onSubmit",
