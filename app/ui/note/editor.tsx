@@ -15,7 +15,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { Button, Card } from '@nextui-org/react';
 
-export default function Editor({ content, onUpdate }: { content: string, onUpdate: (content: string) => void }) {
+export default function Editor({ content, onUpdate }:
+     { content: string, onUpdate: (content: string) => void }) {
 	const editor = useEditor({
 		extensions: [StarterKit, Image],
 		content: content,
@@ -26,6 +27,7 @@ export default function Editor({ content, onUpdate }: { content: string, onUpdat
 		},
 		immediatelyRender: false,
 		onUpdate: ({ editor }) => {
+            console.log(editor.getHTML());
 			onUpdate(editor.getHTML());
 		},
 	});

@@ -1,6 +1,5 @@
-import Link from "next/link";
 import Instruction from "@/app/ui/dashboard/instruction";
-import { Button, Card } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import Image from "next/image";
 
 export default function App() {
@@ -9,7 +8,7 @@ export default function App() {
       <div className="w-full max-w-4xl bg-teal-600 rounded-lg shadow-lg overflow-hidden">
         <div className="relative h-64">
           <Image
-            src="/book-cover-background.jpg"
+            src="/image.png"
             alt="Book cover background"
             layout="fill"
             objectFit="cover"
