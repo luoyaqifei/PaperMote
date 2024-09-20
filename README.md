@@ -235,15 +235,15 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 
 -   Day 3-5: Implement basic frontend and backend
     -   [x] Create server
-    -   [ ] Set up database connection
-    -   [ ] Set up CI/CD pipeline
+    -   [x] Set up database connection
+    -   [x] Set up CI/CD pipeline
     -   [ ] Implement basic CRUD operations for Books and Notes
-    -   [ ] Implement basic frontend pages along with backend API integration
-    -   [ ] Implement user authentication (registration and login)
+    -   [x] Implement basic frontend pages along with backend API integration
+    -   [x] Implement user authentication (registration and login)
 
 -   Day 6-7: Set up frontend structure and routing, develop basic functionality
     -   [ ] Develop layout for main pages (Home, Books, Notes)
-    -   [ ] Develop user profile management page
+    -   [x] Develop user profile management page
 
 ### Sprint 2: Frontend Development and Advanced Features (Week 2, from Sep 16 to Sep 22)
 -   Day 1-3: Add advanced features
@@ -265,7 +265,8 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 ---
 
 ## Future Implementations
-
+-   Add cat image to the app
+-   Add skeleton UI to the app for loading status
 -   Create dashboard for user statistics
 -   Add animations to the app
 -   Add book summary feature based on current notes

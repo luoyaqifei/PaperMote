@@ -18,7 +18,7 @@ function MyToaster() {
     },
       error: {
         style: {
-          color: "pink"
+          color: "#FF0000" // Bright red for better visibility
         }
     },
     style: {

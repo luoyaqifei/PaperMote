@@ -29,10 +29,7 @@ export default function AddBookModal({
   const [form, fields] = useForm({
     lastResult: lastResult as SubmissionResult<string[]> | null,
     onValidate({ formData }) {
-      console.log("formData", formData);
-      const result = parseWithZod(formData, { schema: AddBookSchema });
-      console.log("result", result);
-      return result;
+      return parseWithZod(formData, { schema: AddBookSchema });
     },
     shouldValidate: "onBlur",
     shouldRevalidate: "onSubmit",
@@ -45,7 +42,6 @@ export default function AddBookModal({
   };
 
   useToast(lastResult as SubmissionResult<string[]> | null);
-
 
   return (
     <Modal 

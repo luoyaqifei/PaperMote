@@ -6,6 +6,7 @@ import { authenticate, signup } from "@/app/lib/actions";
 import { LoginSchema, SignupSchema } from "@/app/lib/schema";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
+import { useToast } from "@/app/lib/hooks";
 
 export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
   const [lastResult, action] = useFormState(isLogin ? authenticate : signup, undefined);
@@ -17,6 +18,7 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
+  useToast(lastResult as SubmissionResult<string[]> | null);
 
   return (
     <>

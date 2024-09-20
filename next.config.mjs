@@ -17,7 +17,23 @@ const nextConfig = {
           config.resolve.alias['yjs'] = path.resolve(__dirname, 'node_modules/yjs')
         }
         return config
-      },
-    plugins: [nextui()],
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: 'books.google.com',
+                port: '',
+                pathname: '/books/content/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'books.google.com',
+                port: '',
+                pathname: '/books/content/**',
+            },
+        ],
+    },
 };
+
 export default nextConfig;

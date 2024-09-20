@@ -27,6 +27,8 @@ async function createBooksTable() {
         author VARCHAR(255),
         description TEXT,
         cover TEXT,
+        page_count INTEGER,
+        published_date DATE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         user_id UUID NOT NULL,
