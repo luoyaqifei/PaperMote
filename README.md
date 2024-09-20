@@ -25,9 +25,6 @@ PaperMote is designed for avid readers who want to keep track of their paperbook
 ### Tech Stack
 
 -   Next.js and Tailwind CSS
--   Express and Node.js
--   SQLite and/or MongoDB
--   optional: Docker/Kubernetes
 
 ### APIs
 
@@ -184,7 +181,6 @@ Book
 -   publishedDate
 -   pageCount
 -   image
--   tags
 -   createdAt
 -   updatedAt
 
@@ -233,21 +229,21 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 
 ### Sprint 1: Project Setup and Core Features (Week 1, from Sep 9 to Sep 15)
 -   Day 1-2: Initialize project repository, set up project structure and prepare for background knowledge
-    -   [ ] Set up frontend (React) and backend (Express.js) directories
-    -   [ ] Initialize Git repository and create initial commit
-    -   [ ] Prepare knowledge of tech stack, learn Next.js, Tailwind CSS and SQLite
+    -   [x] Set up frontend and backend directories
+    -   [x] Initialize Git repository and create initial commit
+    -   [x] Prepare knowledge of tech stack
 
 -   Day 3-5: Implement basic frontend and backend
-    -   [ ] Create Express.js server
-    -   [ ] Set up database connection
-    -   [ ] Set up CI/CD pipeline
+    -   [x] Create server
+    -   [x] Set up database connection
+    -   [x] Set up CI/CD pipeline
     -   [ ] Implement basic CRUD operations for Books and Notes
-    -   [ ] Implement basic frontend pages along with backend API integration
-    -   [ ] Implement user authentication (registration and login)
+    -   [x] Implement basic frontend pages along with backend API integration
+    -   [x] Implement user authentication (registration and login)
 
 -   Day 6-7: Set up frontend structure and routing, develop basic functionality
     -   [ ] Develop layout for main pages (Home, Books, Notes)
-    -   [ ] Develop user profile management page
+    -   [x] Develop user profile management page
 
 ### Sprint 2: Frontend Development and Advanced Features (Week 2, from Sep 16 to Sep 22)
 -   Day 1-3: Add advanced features
@@ -269,7 +265,8 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 ---
 
 ## Future Implementations
-
+-   Add cat image to the app
+-   Add skeleton UI to the app for loading status
 -   Create dashboard for user statistics
 -   Add animations to the app
 -   Add book summary feature based on current notes
