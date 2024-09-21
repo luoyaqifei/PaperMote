@@ -11,13 +11,14 @@ import {
 } from "@nextui-org/react";
 import { SubmissionResult, useForm, useInputControl } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { AddNoteSchema } from "@/app/lib/schema";
 import Editor from "./editor";
 import { useToast } from "@/app/lib/hooks";
 import { button } from "../style-variants/button";
 import { modal } from "../style-variants/modal";
 import { input } from "../style-variants/input";
+import { useEffect } from "react";
 
 export default function AddNoteModal({
   isOpen,
@@ -31,28 +32,33 @@ export default function AddNoteModal({
   bookId: string;
 }) {
   const [lastResult, action] = useFormState(addNote, undefined);
+  const { pending } = useFormStatus();
   const [form, fields] = useForm({
     lastResult: lastResult as SubmissionResult<string[]> | null,
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: AddNoteSchema });
     },
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onSubmit",
+    shouldValidate: "onSubmit",
+    shouldRevalidate: "onBlur",
   });
-  const content = useInputControl(fields.content);
 
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.currentTarget.form?.requestSubmit();
-    onClose();
-  };
+  const contentInputControl = useInputControl(fields.content);
+  useEffect(() => {
+    if (lastResult?.status === "success") {
+      onClose();
+    }
+  }, [lastResult]);
 
   useToast(lastResult as SubmissionResult<string[]> | null);
   return (
-    <Modal 
-      isOpen={isOpen} 
-      onOpenChange={onOpenChange} 
+    <Modal
+      isDismissable={false}
+      isOpen={isOpen}
+      onClose={() => {
+        form.reset();
+        contentInputControl.change("");
+      }}
+      onOpenChange={onOpenChange}
       placement="top-center"
       classNames={{
         base: modal().base(),
@@ -66,34 +72,33 @@ export default function AddNoteModal({
         <ModalContent>
           <ModalHeader>New Note</ModalHeader>
           <ModalBody>
-            <Input
-              type="hidden"
-              name="book_id"
-              value={bookId}
-            />
+            <Input type="hidden" name="book_id" value={bookId} />
             <Input
               label="Title"
               placeholder="Enter note title"
               key={fields.title.key}
               name={fields.title.name}
               id={fields.title.id}
+              isInvalid={!!fields.title.errors}
+              errorMessage={fields.title.errors}
               classNames={{
                 input: input().input(),
                 label: input().label(),
-                inputWrapper: input().inputWrapper()
+                inputWrapper: input().inputWrapper(),
               }}
             />
-            <Input
-              type="hidden"
-              name="content"
-              defaultValue={content.value}
-              onChange={(e) => content.change(e.target.value)}
-              key={fields.content.key}
-            />
             <Editor
+              name={fields.content.name}
               content={fields.content.value || ""}
+              isInvalid={!!fields.content.errors}
+              errors={fields.content.errors}
               onUpdate={(c) => {
-                content.change(c);
+                contentInputControl.change(c);
+              }}
+              onBlur={() => {
+                if (fields.content.value === "") {
+                  contentInputControl.change("");
+                }
               }}
             />
           </ModalBody>
@@ -105,7 +110,11 @@ export default function AddNoteModal({
             >
               Cancel
             </Button>
-            <Button type="submit" className={button({color: "primary"})} onClick={handleClick}>
+            <Button
+              type="submit"
+              disabled={pending}
+              className={button({ color: "primary" })}
+            >
               Add Note
             </Button>
           </ModalFooter>

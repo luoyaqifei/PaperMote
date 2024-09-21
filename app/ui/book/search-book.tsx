@@ -10,6 +10,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Skeleton,
 } from "@nextui-org/react";
 import { useState } from "react";
 import Image from "next/image";
@@ -21,7 +22,7 @@ import { modal } from "../style-variants/modal";
 export default function SearchBook({ book }: { book: Book }) {
   const [isOpen, setIsOpen] = useState(false);
   const [bookResults, setBookResults] = useState<BookFromApi[]>([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleClick = async (
     e: React.MouseEvent<HTMLButtonElement>,
     bookResult: BookFromApi
@@ -35,11 +36,13 @@ export default function SearchBook({ book }: { book: Book }) {
     <>
       <Button
         startContent={<MagnifyingGlassIcon className="size-4" />}
-        className={button({color: "secondary", size: "sm"})}
+        className={button({ color: "secondary", size: "sm" })}
         onClick={async () => {
           setIsOpen(true);
+          setIsLoading(true);
           const results = await searchBooksFromApi(book);
           setBookResults(results);
+          setIsLoading(false);
         }}
       >
         Search Online
@@ -57,46 +60,51 @@ export default function SearchBook({ book }: { book: Book }) {
         }}
       >
         <ModalContent>
-          <ModalHeader>
-            Online Book Results
-          </ModalHeader>
+          <ModalHeader>Online Book Results</ModalHeader>
           <ModalBody>
-            {bookResults.map((bookResult: BookFromApi, index: number) => (
-              <div
-                key={bookResult.title + index}
-                className="flex items-center space-x-4 mb-4 hover:bg-gray-100 p-2 rounded-md"
-              >
-                {bookResult.imageLinks?.thumbnail && (
-                  <Image
-                    src={bookResult.imageLinks.thumbnail}
-                    alt={bookResult.title}
-                    width={50}
-                    height={75}
-                    className="object-cover"
-                  />
-                )}
-                <div className="flex items-center justify-between w-full">
-                  <div>
-                    <h3 className="text-lg font-semibold">
-                      {bookResult.title}
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                      {bookResult.authors?.join(", ")}
-                    </p>
+            <Skeleton isLoaded={!isLoading}>
+              {bookResults.map((bookResult: BookFromApi, index: number) => (
+                <div
+                  key={bookResult.title + index}
+                  className="flex items-center space-x-4 mb-4 hover:bg-gray-100 p-2 rounded-md"
+                >
+                  {bookResult.imageLinks?.thumbnail && (
+                    <Image
+                      src={bookResult.imageLinks.thumbnail}
+                      alt={bookResult.title}
+                      width={50}
+                      height={75}
+                      className="object-cover"
+                    />
+                  )}
+                  <div className="flex items-center justify-between w-full">
+                    <div>
+                      <h3 className="text-lg font-semibold">
+                        {bookResult.title}
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        {bookResult.authors?.join(", ")}
+                      </p>
+                    </div>
+                    <Button
+                      className={button({ color: "primary" })}
+                      onClick={(e) => handleClick(e, bookResult)}
+                    >
+                      Apply
+                    </Button>
                   </div>
-                  <Button
-                    className={button({color: "primary"})}
-                    onClick={(e) => handleClick(e, bookResult)}
-                  >
-                    Apply
-                  </Button>
                 </div>
-              </div>
-            ))}
+              ))}
+              {bookResults.length === 0 && !isLoading && (
+                <div className="text-center text-gray-500">
+                  No results found online.
+                </div>
+              )}
+            </Skeleton>
           </ModalBody>
           <ModalFooter>
             <Button
-              className={button({color: "neutral", flat: true})}
+              className={button({ color: "neutral", flat: true })}
               onClick={() => setIsOpen(false)}
             >
               Close

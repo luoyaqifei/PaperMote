@@ -216,6 +216,7 @@ export async function addNote(prevState: unknown, formData: FormData) {
   if (submission.status !== "success") {
     return submission.reply();
   }
+  console.log(submission.value);
   const { title, content, book_id } = submission.value;
 
   try {
@@ -224,6 +225,7 @@ export async function addNote(prevState: unknown, formData: FormData) {
       VALUES (${title}, ${content}, ${book_id})
     `;
   } catch (error) {
+    console.log(error);
     return {
       message: "Database Error: Failed to add note",
       status: "error",

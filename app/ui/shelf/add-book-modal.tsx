@@ -17,39 +17,43 @@ import { useToast } from "@/app/lib/hooks";
 import { button } from "../style-variants/button";
 import { modal } from "../style-variants/modal";
 import { input } from "../style-variants/input";
-
+import { useEffect } from "react";
 export default function AddBookModal({
   isOpen,
   onOpenChange,
   onClose,
 }: {
   isOpen: boolean;
-  onOpenChange: () => void;
+  onOpenChange: (isOpen: boolean) => void;
   onClose: () => void;
 }) {
   const [lastResult, action] = useFormState(addBook, undefined);
-  const {pending} = useFormStatus();
+  const { pending } = useFormStatus();
   const [form, fields] = useForm({
     lastResult: lastResult as SubmissionResult<string[]> | null,
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: AddBookSchema });
     },
-    shouldValidate: "onBlur",
-    shouldRevalidate: "onSubmit",
+    shouldValidate: "onSubmit",
+    shouldRevalidate: "onBlur",
   });
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.currentTarget.form?.requestSubmit();
-    onClose();
-  };
+  useEffect(() => {
+    if (lastResult?.status === "success") {
+      onClose();
+    }
+  }, [lastResult]);
 
   useToast(lastResult as SubmissionResult<string[]> | null);
 
   return (
-    <Modal 
-      isOpen={isOpen} 
-      onOpenChange={onOpenChange} 
+    <Modal
+      isDismissable={false}
+      isOpen={isOpen}
+      onClose={() => {
+        form.reset();
+      }}
+      onOpenChange={onOpenChange}
       placement="top-center"
       classNames={{
         base: modal().base(),
@@ -59,7 +63,12 @@ export default function AddBookModal({
         footer: modal().footer(),
       }}
     >
-      <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
+      <form
+        id={form.id}
+        onSubmit={form.onSubmit}
+        action={action}
+        noValidate
+      >
         <ModalContent>
           <ModalHeader>New Book</ModalHeader>
           <ModalBody>
@@ -70,6 +79,8 @@ export default function AddBookModal({
               defaultValue={fields.title.value}
               key={fields.title.key}
               name={fields.title.name}
+              errorMessage={fields.title.errors}
+              isInvalid={!!fields.title.errors}
               classNames={{
                 input: input().input(),
                 label: input().label(),
@@ -82,6 +93,8 @@ export default function AddBookModal({
               defaultValue={fields.author.value}
               key={fields.author.key}
               name={fields.author.name}
+              isInvalid={!!fields.author.errors}
+              errorMessage={fields.author.errors}
               classNames={{
                 input: input().input(),
                 inputWrapper: input().inputWrapper(),
@@ -91,12 +104,16 @@ export default function AddBookModal({
           </ModalBody>
           <ModalFooter>
             <Button
-              className={button({color: "neutral"})}
+              className={button({ color: "neutral", flat: true })}
               onClick={onClose}
             >
-              Close
+              Cancel
             </Button>
-            <Button disabled={pending} type="submit" className={button({color: "primary"})} onClick={handleClick}>
+            <Button
+              type="submit"
+              disabled={pending}
+              className={button({ color: "primary" })}
+            >
               Add Book
             </Button>
           </ModalFooter>

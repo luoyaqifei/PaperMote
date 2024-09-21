@@ -14,19 +14,22 @@ import {
 	ArrowUturnRightIcon
 } from "@heroicons/react/24/outline";
 import { Button, Card } from '@nextui-org/react';
+import { borderColor } from "../style-variants/variables";
 
-export default function Editor({ content, onUpdate }:
-     { content: string, onUpdate: (content: string) => void }) {
+export default function Editor({ content, onUpdate, onBlur, isInvalid, errors, name }:
+     { content: string, onUpdate: (content: string) => void, onBlur: () => void, isInvalid?: boolean, errors: string[] | undefined, name: string }) {
 	const editor = useEditor({
 		extensions: [StarterKit, Image],
 		content: content,
 		editorProps: {
 			attributes: {
-				class: 'prose focus:outline-none',
+				class: `prose min-h-[200px] focus:outline-none rounded p-2`,
+				name: name,
 			},
 		},
 		immediatelyRender: false,
 		onUpdate: ({ editor }) => {
+			console.log(editor.getHTML());
 			onUpdate(editor.getHTML());
 		},
 	});
@@ -39,7 +42,7 @@ export default function Editor({ content, onUpdate }:
 	}
 
 	return (
-		<Card className="p-4 bg-white shadow-md">
+		<Card className="button">
 			<div className="flex flex-wrap gap-2 mb-4">
 				<Button
 					size="sm"
@@ -75,9 +78,16 @@ export default function Editor({ content, onUpdate }:
 				>
 				</Button>
 			</div>
-			<div className="prose max-w-none h-64 overflow-y-auto">
-				<EditorContent editor={editor} className="h-full min-h-[200px] border border-teal-200 rounded p-2" />
-			</div>
+			<EditorContent 
+				editor={editor}
+				className={`h-full min-h-[200px] border ${errors ? 'border-danger' : borderColor} rounded p-2`}
+				onBlur={() => {
+					if (editor?.isEmpty) {
+						editor?.commands.clearContent();
+					}
+				}}
+			/>
+			{errors && <div className="text-danger text-xs mt-2">{errors}</div>}
 		</Card>
 	);
 }

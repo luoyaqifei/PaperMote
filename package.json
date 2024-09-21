@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@builder.io/react-hydration-overlay": "^0.1.0",
     "@conform-to/react": "^1.2.1",
     "@conform-to/zod": "^1.2.1",
     "@heroicons/react": "^2.1.5",

@@ -22,7 +22,7 @@ const BookSchema = z.object({
 const NoteSchema = z.object({
     //TODO: change
     id: z.string().optional(),
-    title: z.string().min(1).optional(),
+    title: z.string().min(1),
     content: z.string().min(1),
     created_at: z.date().optional(),
     updated_at: z.date().optional(),
