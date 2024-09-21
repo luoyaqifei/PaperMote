@@ -7,6 +7,8 @@ import { LoginSchema, SignupSchema } from "@/app/lib/schema";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useToast } from "@/app/lib/hooks";
+import { button } from "../style-variants/button";
+import { input } from "../style-variants/input";
 
 export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
   const [lastResult, action] = useFormState(isLogin ? authenticate : signup, undefined);
@@ -24,6 +26,11 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
     <>
       <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate className="space-y-4">
         <Input
+          classNames={{
+            input: input().input(),
+            label: input().label(),
+            inputWrapper: input().inputWrapper()
+          }}
           label="Email"
           type="email"
           key={fields.email.key}
@@ -31,10 +38,6 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
           defaultValue={fields.email.initialValue as string}
           isInvalid={!!fields.email.errors}
           errorMessage={fields.email.errors}
-          classNames={{
-            input: "bg-white",
-            label: "text-teal-600"
-          }}
         />
         <Input
           label="Password"
@@ -45,11 +48,12 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
           isInvalid={!!fields.password.errors}
           errorMessage={fields.password.errors}
           classNames={{
-            input: "bg-white",
-            label: "text-teal-600"
+            input: input().input(),
+            label: input().label(),
+            inputWrapper: input().inputWrapper()
           }}
         />
-        <Button type="submit" color="primary" className="w-full bg-teal-600 hover:bg-teal-700">
+        <Button type="submit" className={button({color: "primary"})}>
           {isLogin ? "Login" : "Sign Up"}
         </Button>
         {form.errors && (
@@ -61,11 +65,11 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
       </form>
       <div className="mt-4 text-center">
         {isLogin 
-          ? <Link href="/signup" className="text-teal-600 hover:underline">
-              Don't have an account? Sign up
+          ? <Link href="/signup" className={`${button({color: "primary", flat: true})} hover:underline`}>
+              No account? <span className="underline">Sign up</span>
             </Link> 
-          : <Link href="/login" className="text-teal-600 hover:underline">
-              Already have an account? Log in
+          : <Link href="/login" className={`${button({color: "primary", flat: true})} hover:underline`}>
+              Already have an account? <span className="underline">Log in</span>
             </Link>
         }
       </div>

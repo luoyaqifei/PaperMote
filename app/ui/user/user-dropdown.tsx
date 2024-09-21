@@ -1,5 +1,4 @@
 "use client";
-import { getCurrentUser } from "@/app/lib/data";
 import {
   Dropdown,
   DropdownTrigger,
@@ -9,13 +8,12 @@ import {
   Avatar,
   Link,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
 import { User } from "@/app/lib/definitions";
 import { signOutAction } from "@/app/lib/actions";
 import { generateAvatar } from "@/app/lib/client-utils";
-import { useRouter } from "next/navigation";
+import { button } from "../style-variants/button";
 
-export function UserDropdown({ user }: { user: User }) {
+export function UserDropdown({ user }: { user: User | null }) {
   const handleSignOut = async () => {
     try {
       await signOutAction();
@@ -33,21 +31,24 @@ export function UserDropdown({ user }: { user: User }) {
           className="transition-transform"
         />
       </DropdownTrigger>
-      <DropdownMenu aria-label="User actions">
-        <DropdownItem key="profile" className="h-14 gap-2" isReadOnly>
-          <p className="font-semibold">Signed in as</p>
-          <p className="font-semibold">{user?.username}</p>
+      <DropdownMenu aria-label="User actions" variant="flat">
+        <DropdownItem key="info" className="h-14 gap-2">
+        <p className="font-semibold">Signed in as</p>
+        <p className="font-semibold">{user?.username}</p>
         </DropdownItem>
-        <DropdownItem key="settings" as={Link} href="/dashboard/user-profile">
+        <DropdownItem key="bookshelf" href="/dashboard">
+          My Bookshelf
+        </DropdownItem>
+        <DropdownItem key="profile" href="/dashboard/user-profile">
           My Profile
         </DropdownItem>
-        <DropdownItem key="logout" color="danger" onPress={handleSignOut}>
+        <DropdownItem key="logout" color="danger" onClick={handleSignOut}>
           Sign Out
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
   ) : (
-    <Button as={Link} color="primary" href="/login" variant="flat">
+    <Button as={Link} href="/login" className={button({color: "primary"})}>
       Sign In
     </Button>
   );

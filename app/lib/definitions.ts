@@ -1,6 +1,3 @@
-import { TypeOf } from "zod";
-import { LoginSchema } from "./schema";
-
 export interface User {
   id: string;
   username: string;
@@ -45,13 +42,3 @@ export interface Note {
   created_at: string;
   updated_at: string;
 }
-
-export interface BookWithNotes extends Book {
-  notes: Note[];
-}
-
-export interface UserWithBooks extends User {
-  books: BookWithNotes[];
-}
-
-export type LoginModel = TypeOf<typeof LoginSchema>;

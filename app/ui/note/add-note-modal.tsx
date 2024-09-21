@@ -11,11 +11,13 @@ import {
 } from "@nextui-org/react";
 import { SubmissionResult, useForm, useInputControl } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import { AddNoteSchema } from "@/app/lib/schema";
 import Editor from "./editor";
-import { useState } from "react";
 import { useToast } from "@/app/lib/hooks";
+import { button } from "../style-variants/button";
+import { modal } from "../style-variants/modal";
+import { input } from "../style-variants/input";
 
 export default function AddNoteModal({
   isOpen,
@@ -53,17 +55,22 @@ export default function AddNoteModal({
       onOpenChange={onOpenChange} 
       placement="top-center"
       classNames={{
-        base: "bg-white",
-        header: "bg-teal-600 text-white",
-        body: "py-6",
-        footer: "bg-white"
+        base: modal().base(),
+        backdrop: modal().backdrop(),
+        header: modal().header(),
+        body: modal().body(),
+        footer: modal().footer(),
       }}
     >
       <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
         <ModalContent>
-          <ModalHeader className="flex flex-col gap-1">New Note</ModalHeader>
+          <ModalHeader>New Note</ModalHeader>
           <ModalBody>
-            <Input type="hidden" name="book_id" value={bookId} />
+            <Input
+              type="hidden"
+              name="book_id"
+              value={bookId}
+            />
             <Input
               label="Title"
               placeholder="Enter note title"
@@ -71,15 +78,15 @@ export default function AddNoteModal({
               name={fields.title.name}
               id={fields.title.id}
               classNames={{
-                input: "bg-white",
-                inputWrapper: "bg-white border border-gray-300 hover:border-teal-500 focus-within:border-teal-500",
-                label: "text-teal-600"
+                input: input().input(),
+                label: input().label(),
+                inputWrapper: input().inputWrapper()
               }}
             />
             <Input
               type="hidden"
               name="content"
-              value={content.value}
+              defaultValue={content.value}
               onChange={(e) => content.change(e.target.value)}
               key={fields.content.key}
             />
@@ -91,10 +98,14 @@ export default function AddNoteModal({
             />
           </ModalBody>
           <ModalFooter>
-            <Button color="default" variant="light" onPress={onClose}>
-              Close
+            <Button
+              type="button"
+              className={button({ color: "neutral", flat: true })}
+              onClick={() => onClose()}
+            >
+              Cancel
             </Button>
-            <Button color="primary" type="submit" className="bg-teal-600 hover:bg-teal-700" onClick={handleClick}>
+            <Button type="submit" className={button({color: "primary"})} onClick={handleClick}>
               Add Note
             </Button>
           </ModalFooter>

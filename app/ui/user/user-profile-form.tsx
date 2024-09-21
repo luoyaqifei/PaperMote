@@ -8,6 +8,9 @@ import { parseWithZod } from "@conform-to/zod";
 import { Avatar, Button, Input } from "@nextui-org/react";
 import { useFormState } from "react-dom";
 import { useToast } from "@/app/lib/hooks";
+import { button } from "../style-variants/button";
+import { headline } from "../style-variants/headline";
+import { input } from "../style-variants/input";
 
 export const UserProfileForm = ({ user }: { user: User }) => {
   const [lastResult, action] = useFormState(updateUser, undefined);
@@ -28,7 +31,7 @@ export const UserProfileForm = ({ user }: { user: User }) => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6 text-teal-600">User Profile</h1>
+      <h1 className={headline({size: "2xl", color: "primary"})}>User Profile</h1>
       <div className="flex items-center mb-6">
         <Avatar
           src={user?.avatar ?? generateAvatar(user.username)}
@@ -45,8 +48,9 @@ export const UserProfileForm = ({ user }: { user: User }) => {
             isInvalid={!!fields.username.errors}
             errorMessage={fields.username.errors}
             classNames={{
-              input: "bg-white",
-              label: "text-teal-600"
+              input: input().input(),
+              label: input().label(),
+              inputWrapper: input().inputWrapper()
             }}
           />
           <Input
@@ -58,14 +62,14 @@ export const UserProfileForm = ({ user }: { user: User }) => {
             isInvalid={!!fields.email.errors}
             errorMessage={fields.email.errors}
             classNames={{
-              input: "bg-white",
-              label: "text-teal-600"
+              input: input().input(),
+              label: input().label(),
+              inputWrapper: input().inputWrapper()
             }}
           />
           <Button
-            color="primary"
             type="submit"
-            className="bg-teal-600 hover:bg-teal-700"
+            className={button({color: "primary"})}
           >
             Save Changes
           </Button>

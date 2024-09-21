@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "seed": "tsx app/seed/route.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@conform-to/react": "^1.2.1",

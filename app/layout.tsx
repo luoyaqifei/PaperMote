@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/app/lib/providers";
-import { lusitana } from "./ui/fonts";
+import { alegreya } from "./ui/fonts";
 
 export const metadata: Metadata = {
   title: "PaperMote",
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
       <html lang="en">
       <body
-        className={`${lusitana.className} antialiased`}
+        className={`${alegreya.className} sans-serif antialiased`}
       >
         <Providers>
         {children}

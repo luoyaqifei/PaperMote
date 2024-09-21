@@ -1,7 +1,8 @@
 import { getCurrentUser } from "@/app/lib/data";
+import { User } from "@/app/lib/definitions";
 import { UserProfileForm } from "@/app/ui/user/user-profile-form";
 
 export default async function UserProfile() {
-	const user: any = await getCurrentUser();
-	return <UserProfileForm user={user}/>
+	const user = await getCurrentUser();
+	return <UserProfileForm user={user as User}/>
 }

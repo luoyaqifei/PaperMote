@@ -3,6 +3,8 @@ import { Card, CardBody, CardHeader } from '@nextui-org/react';
 import SearchBook from "./search-book";
 import EditBook from "./edit-book";
 import Image from "next/image";
+import { headline } from "../style-variants/headline";
+import { backgroundColor } from "../style-variants/variables";
 
 export default async function BookCard({ bookId }: { bookId: string }) {
     const book = await fetchBook(bookId);
@@ -10,9 +12,9 @@ export default async function BookCard({ bookId }: { bookId: string }) {
 
     return (
         <Card className="bg-white">
-            <CardHeader className="bg-teal-600 text-white flex justify-between items-center">
-                <h2 className="text-2xl font-bold">{book.title}</h2>
-                <div className="flex flex-col">
+            <CardHeader className={`${backgroundColor.primary}  text-white flex justify-between items-center`}>
+                <h2 className={headline({size: "2xl", color: "primary"})}>{book.title}</h2>
+                <div className="flex flex-col lg:flex-row gap-4">
                     <EditBook book={book} />
                     <SearchBook book={book} />
                 </div>

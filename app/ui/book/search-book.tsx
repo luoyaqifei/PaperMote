@@ -5,16 +5,18 @@ import { Book, BookFromApi } from "@/app/lib/definitions";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
   Button,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
 import { useState } from "react";
 import Image from "next/image";
 import { SubmissionResult } from "@conform-to/react";
 import { setToast } from "@/app/lib/client-utils";
+import { button } from "../style-variants/button";
+import { modal } from "../style-variants/modal";
 
 export default function SearchBook({ book }: { book: Book }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,10 +35,7 @@ export default function SearchBook({ book }: { book: Book }) {
     <>
       <Button
         startContent={<MagnifyingGlassIcon className="size-4" />}
-        className="mt-4 ml-auto bg-indigo-600 hover:bg-indigo-700"
-        color="secondary"
-        variant="solid"
-        size="sm"
+        className={button({color: "secondary", size: "sm"})}
         onClick={async () => {
           setIsOpen(true);
           const results = await searchBooksFromApi(book);
@@ -50,21 +49,21 @@ export default function SearchBook({ book }: { book: Book }) {
         onClose={() => setIsOpen(false)}
         title="Search Book"
         classNames={{
-          base: "bg-white",
-          backdrop: "bg-black/50",
-          header: "bg-teal-600 text-white",
-          body: "bg-white",
-          footer: "bg-teal-600 text-white",
+          base: modal().base(),
+          backdrop: modal().backdrop(),
+          header: modal().header(),
+          body: modal().body(),
+          footer: modal().footer(),
         }}
       >
         <ModalContent>
-          <ModalHeader className="flex flex-col gap-1">
+          <ModalHeader>
             Online Book Results
           </ModalHeader>
           <ModalBody>
-            {bookResults.map((bookResult: BookFromApi) => (
+            {bookResults.map((bookResult: BookFromApi, index: number) => (
               <div
-                key={bookResult.title}
+                key={bookResult.title + index}
                 className="flex items-center space-x-4 mb-4 hover:bg-gray-100 p-2 rounded-md"
               >
                 {bookResult.imageLinks?.thumbnail && (
@@ -86,10 +85,7 @@ export default function SearchBook({ book }: { book: Book }) {
                     </p>
                   </div>
                   <Button
-                    className="bg-teal-600 hover:bg-teal-700 ml-auto"
-                    color="primary"
-                    size="sm"
-                    variant="solid"
+                    className={button({color: "primary"})}
                     onClick={(e) => handleClick(e, bookResult)}
                   >
                     Apply
@@ -98,6 +94,14 @@ export default function SearchBook({ book }: { book: Book }) {
               </div>
             ))}
           </ModalBody>
+          <ModalFooter>
+            <Button
+              className={button({color: "neutral", flat: true})}
+              onClick={() => setIsOpen(false)}
+            >
+              Close
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

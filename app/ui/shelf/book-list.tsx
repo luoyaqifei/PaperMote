@@ -9,7 +9,7 @@ export default async function BookList({ books }: { books: Book[] }) {
 			{books.length > 0 ? books.map((book) => (
 				<Link key={book.id} href={`/dashboard/books/${book.id}`} className="block">
 					<Card 
-						className="book-spine w-32 h-48 rounded-l-lg shadow-md transform hover:scale-105 transition-transform duration-300" 
+						className="book-spine w-32 h-48 md:w-40 md:h-60 lg:w-48 lg:h-72 rounded-l-lg shadow-md transform hover:scale-105 transition-transform duration-300" 
 						style={{ 
 							backgroundImage: `url(${book.cover})`, 
 							backgroundSize: 'cover', 

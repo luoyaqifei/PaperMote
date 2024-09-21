@@ -1,7 +1,7 @@
 "use server";
 
 import { sql } from "@vercel/postgres";
-import { Book, Note, User } from "./definitions";
+import { Book, BookFromApi, Note, User } from "./definitions";
 import { auth } from "@/auth";
 
 export const fetchBooks = async () => {
@@ -31,7 +31,7 @@ export const searchBooksFromApi = async (book: Book) => {
     `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=5`
   );
   const data = await response.json();
-  return data?.items?.map((item: any) => item.volumeInfo) ?? [];
+  return data?.items?.map((item: { volumeInfo: BookFromApi }) => item.volumeInfo) ?? [];
 };
 
 export const fetchBook = async (bookId: string) => {

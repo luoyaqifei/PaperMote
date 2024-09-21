@@ -14,6 +14,9 @@ import { parseWithZod } from "@conform-to/zod";
 import { useFormState, useFormStatus } from "react-dom";
 import { AddBookSchema } from "@/app/lib/schema";
 import { useToast } from "@/app/lib/hooks";
+import { button } from "../style-variants/button";
+import { modal } from "../style-variants/modal";
+import { input } from "../style-variants/input";
 
 export default function AddBookModal({
   isOpen,
@@ -49,15 +52,16 @@ export default function AddBookModal({
       onOpenChange={onOpenChange} 
       placement="top-center"
       classNames={{
-        base: "bg-white",
-        header: "bg-teal-600 text-white",
-        body: "py-6",
-        footer: "bg-white"
+        base: modal().base(),
+        backdrop: modal().backdrop(),
+        header: modal().header(),
+        body: modal().body(),
+        footer: modal().footer(),
       }}
     >
       <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
         <ModalContent>
-          <ModalHeader className="flex flex-col gap-1">New Book</ModalHeader>
+          <ModalHeader>New Book</ModalHeader>
           <ModalBody>
             <Input
               label="Title"
@@ -66,11 +70,10 @@ export default function AddBookModal({
               defaultValue={fields.title.value}
               key={fields.title.key}
               name={fields.title.name}
-              variant="bordered"
               classNames={{
-                input: "bg-white",
-                inputWrapper: "bg-white border focus-within:border-teal-500",
-                label: "text-teal-600"
+                input: input().input(),
+                label: input().label(),
+                inputWrapper: input().inputWrapper(),
               }}
             />
             <Input
@@ -79,19 +82,21 @@ export default function AddBookModal({
               defaultValue={fields.author.value}
               key={fields.author.key}
               name={fields.author.name}
-              variant="bordered"
               classNames={{
-                input: "bg-white",
-                inputWrapper: "bg-white border focus-within:border-teal-500",
-                label: "text-teal-600"
+                input: input().input(),
+                inputWrapper: input().inputWrapper(),
+                label: input().label(),
               }}
             />
           </ModalBody>
           <ModalFooter>
-            <Button color="default" variant="light" onPress={onClose}>
+            <Button
+              className={button({color: "neutral"})}
+              onClick={onClose}
+            >
               Close
             </Button>
-            <Button disabled={pending} color="primary" type="submit" className="bg-teal-600 hover:bg-teal-700" onClick={handleClick}>
+            <Button disabled={pending} type="submit" className={button({color: "primary"})} onClick={handleClick}>
               Add Book
             </Button>
           </ModalFooter>

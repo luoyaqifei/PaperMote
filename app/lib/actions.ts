@@ -16,7 +16,7 @@ import { generateFromEmail } from "unique-username-generator";
 import { parseWithZod } from "@conform-to/zod";
 import { SignupSchema } from "./schema";
 import { BookFromApi, User } from "./definitions";
-import { fetchBook, getCurrentUser } from "./data";
+import { getCurrentUser } from "./data";
 
 export async function signup(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
@@ -98,6 +98,7 @@ export async function updateUser(prevState: unknown, formData: FormData) {
   if (submission.status !== "success") {
     return submission.reply();
   }
+  // TODO: check if email is already taken
   const { username, email, id } = submission.value;
   try {
     const users = await sql<User>`

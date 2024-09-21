@@ -43,36 +43,36 @@ export default function Editor({ content, onUpdate }:
 			<div className="flex flex-wrap gap-2 mb-4">
 				<Button
 					size="sm"
+                    startContent={<BoldIcon className="w-4 h-4" />}
 					color={editor?.isActive('bold') ? 'primary' : 'default'}
 					onClick={() => editor?.chain().focus().toggleBold().run()}
 				>
-					Bold
 				</Button>
 				<Button
 					size="sm"
+                    startContent={<ItalicIcon className="w-4 h-4" />}
 					color={editor?.isActive('italic') ? 'primary' : 'default'}
 					onClick={() => editor?.chain().focus().toggleItalic().run()}
 				>
-					<ItalicIcon className="w-4 h-4" />
 				</Button>
 				<Button
 					size="sm"
+                    startContent={<StrikethroughIcon className="w-4 h-4" />}
 					color={editor?.isActive('strike') ? 'primary' : 'default'}
 					onClick={() => editor?.chain().focus().toggleStrike().run()}
 				>
-					<StrikethroughIcon className="w-4 h-4" />
 				</Button>
 				<Button
 					size="sm"
+                    startContent={<ArrowUturnLeftIcon className="w-4 h-4" />}
 					onClick={() => editor?.chain().focus().undo().run()}
 				>
-					<ArrowUturnLeftIcon className="w-4 h-4" />
 				</Button>
 				<Button
 					size="sm"
+                    startContent={<ArrowUturnRightIcon className="w-4 h-4" />}
 					onClick={() => editor?.chain().focus().redo().run()}
 				>
-					<ArrowUturnRightIcon className="w-4 h-4" />
 				</Button>
 			</div>
 			<div className="prose max-w-none h-64 overflow-y-auto">
