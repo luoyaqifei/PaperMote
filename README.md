@@ -3,6 +3,7 @@
 ## Overview
 
 PaperMote is a web app that allows users to keep track of their paperbook notes and annotations.
+![Vercel](https://vercelbadge.vercel.app/api/luoyaqifei/paper-mote)
 
 ### Demo
 
