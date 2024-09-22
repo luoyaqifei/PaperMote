@@ -3,13 +3,12 @@
 ## Overview
 
 PaperMote is a web app that allows users to keep track of their paperbook notes and annotations.
-![Vercel](https://vercelbadge.vercel.app/api/luoyaqifei/PaperMote)
 
 ### Demo
 
 [Presentation](https://luoyaqifei.github.io/PaperMote/) is depoloyed on Github Pages, using the `gh-pages` branch of this repo.
 
-[Demo](https://paper-mote.vercel.app/) is deployed on Vercel, using the `main` branch of this repo.
+[Demo](https://paper-mote.vercel.app/) is deployed on Vercel, using the `main` branch of this repo. ![Vercel Deployment Status](https://vercelbadge.vercel.app/api/luoyaqifei/PaperMote)
 
 ### Installation
 
@@ -34,12 +33,12 @@ Copy `.env.example` to `.env` and set the correct environment variables.
 npm install
 npm run dev
 ```
-After the server is running, you need to use Postman or curl to `GET` the route `/seed` to populate the tables with data.
+After the server is running, you need to use Postman or curl to `GET` the route `/seed` to populate the tables with data schema.
+
 
 ### Problem Space
 
 Paperbooks are a great way to read, but they can be difficult to annotate and take notes on. PaperMote solves this problem by providing a platform for users to easily annotate and take notes on their paperbooks.
-
 
 ### User Profile
 
@@ -57,15 +56,18 @@ PaperMote is designed for avid readers who want to keep track of their paperbook
 
 ### Tech Stack
 
--   Next.js and Tailwind CSS
+-   Frontend and Backend: 
+    -   Next.js and React, for functionalities
+    -   NextUI for UI components, Tailwind CSS and Tailwind Variants for style managements
+-   Database: Vercel Postgres
+-   Deployment: Vercel
+
+This tech stack is chosen because of the innate support of React Server Rendering and large community group of Next.js, and the 1-Click deployment to Vercel.
 
 ### APIs
 
-Optional:
-
--   Google Books API, or another API to search for books
+-   Google Books API to search for books online
 -   Image upload API to upload images
--   Short url API to create shortened URLs
 
 ### Sitemap
 
@@ -117,7 +119,7 @@ Here are the mockups for the main pages of PaperMote:
    |                                  |
    |  [Submit]                        |
    |                                  |
-   |  Forgot Password?                |
+   |                                  |
    |                                  |
    +----------------------------------+
    ```
@@ -181,7 +183,7 @@ Here are the mockups for the main pages of PaperMote:
    |  Username: ___________           |
    |  Email: ________________         |
    |                                  |
-   |  [Change Password]               |
+   |                                  |
    |                                  |
    |  Statistics:                     |
    |  Books: 12                       |
@@ -211,50 +213,25 @@ Book
 -   title
 -   author
 -   description
--   publishedDate
--   pageCount
--   image
--   createdAt
--   updatedAt
+-   published_date
+-   page_count
+-   cover
+-   created_at
+-   updated_at
 
 Note
 
 -   id
 -   title
 -   content
--   image
--   book id
--   user id
--   book location
--   createdAt
--   updatedAt
+-   book_id
+-   book_location
+-   created_at
+-   updated_at
 
 ### Endpoints
 
-List endpoints that your server will implement, including HTTP methods, parameters, and example responses.
-Users
-
--   GET /users
--   POST /users
--   PUT /users/:id
--   DELETE /users/:id
--   POST /users/login
--   POST /users/logout
-
-Books
-
--   GET /books
--   GET /books/:id
--   POST /books
--   PUT /books/:id
--   DELETE /books/:id
-
-Notes
-
--   GET /notes
--   POST /notes
--   PUT /notes/:id
--   DELETE /notes/:id
+There are no specific endpoints on the server side, because in Next.js App Router mode, it's directory-based routing and it uses server actions which hides details of API calls.
 
 ## Roadmap
 
@@ -270,35 +247,34 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
     -   [x] Create server
     -   [x] Set up database connection
     -   [x] Set up CI/CD pipeline
-    -   [ ] Implement basic CRUD operations for Books and Notes
+    -   [x] Implement basic CRUD operations for Books and Notes
     -   [x] Implement basic frontend pages along with backend API integration
     -   [x] Implement user authentication (registration and login)
 
 -   Day 6-7: Set up frontend structure and routing, develop basic functionality
-    -   [ ] Develop layout for main pages (Home, Books, Notes)
+    -   [x] Develop layout for main pages (Home, Books, Notes)
     -   [x] Develop user profile management page
 
 ### Sprint 2: Frontend Development and Advanced Features (Week 2, from Sep 16 to Sep 22)
 -   Day 1-3: Add advanced features
-    -   [ ] Implement functionality to record and update notes at specific locations within books
+    -   [x] Implement functionality to record and update notes at specific locations within books
     -   [ ] Implement basic search functionality
     -   [ ] Implement functionality to upload images of paperbooks
     -   [ ] Implement functionality to sort notes by book location, last updated time, etc.
-    -   [ ] Add responsive design across all devices
+    -   [x] Add responsive design across all devices
 -   Day 4-5: Testing and Deployment Preparation
     -   [ ] Conduct initial testing of all features
     -   [ ] Fix any critical bugs
-    -   [ ] Refine UI/UX based on initial usage
+    -   [x] Refine UI/UX based on initial usage
     -   [ ] Configure frontend build for production
-    -   [ ] Prepare for the deployment
+    -   [x] Prepare for the deployment
 -  Day 6-7: Polish and Documentation
-    -   [ ] Implement additional features
-    -   [ ] Add more detailed documentation
+    -   [x] Implement additional features
+    -   [x] Add more detailed documentation
 
 ---
 
 ## Future Implementations
--   Add cat image to the app
 -   Add skeleton UI to the app for loading status
 -   Create dashboard for user statistics
 -   Add animations to the app
