@@ -6,10 +6,10 @@ import Image from "next/image";
 import { headline } from "@/app/ui/style-variants/headline";
 import { backgroundColor } from "@/app/ui/style-variants/variables";
 import { BookmarkSquareIcon } from "@heroicons/react/24/outline";
+import { Book } from "@/app/lib/definitions";
 
-export default async function BookDetailCard({ bookId }: { bookId: string }) {
-  const book = await fetchBook(bookId);
-  if (!book) return null;
+export default async function BookDetailCard({ book }: { book: Book }) {
+
 
   return (
     <Card className="bg-white">
