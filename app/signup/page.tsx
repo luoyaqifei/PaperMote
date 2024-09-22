@@ -1,11 +1,15 @@
-import LoginOrSignupForm from "@/app/ui/user/login-signup-form";
+import LoginOrSignupForm from "@/app/ui/components/login-signup-form";
 import { Card } from "@nextui-org/react";
+import { headline } from "@/app/ui/style-variants/headline";
+import { backgroundColor } from "@/app/ui/style-variants/variables";
+import BackgroundImage from "@/app/ui/components/background-image";
 
 export default function Signup() {
   return (
-    <div className="container flex flex-col items-center justify-center min-h-screen py-8 mx-auto bg-teal-50">
-      <Card className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-teal-600 text-center">Sign Up</h1>
+    <div className={`container flex flex-col items-center justify-center min-h-screen mx-auto`}>
+      <BackgroundImage />
+      <Card className={`w-full p-8 rounded-lg shadow-lg ${backgroundColor.primary} opacity-90`}>
+        <h1 className={headline({size: "3xl", color: "primary"})}>Sign Up</h1>
         <LoginOrSignupForm isLogin={false} />
       </Card>
     </div>

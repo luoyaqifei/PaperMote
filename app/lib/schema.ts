@@ -20,13 +20,13 @@ const BookSchema = z.object({
 });
 
 const NoteSchema = z.object({
-    //TODO: change
     id: z.string().optional(),
-    title: z.string().min(1).optional(),
+    title: z.string().min(1),
     content: z.string().min(1),
     created_at: z.date().optional(),
     updated_at: z.date().optional(),
     book_id: z.string().optional(),
+    book_location: z.number().optional(),
 });
 
 export const AddBookSchema = BookSchema.omit({id: true, created_at: true, updated_at: true});

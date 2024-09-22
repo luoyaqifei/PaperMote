@@ -3,10 +3,43 @@
 ## Overview
 
 PaperMote is a web app that allows users to keep track of their paperbook notes and annotations.
+![Vercel](https://vercelbadge.vercel.app/api/luoyaqifei/paper-mote)
+
+### Demo
+
+[Presentation](https://luoyaqifei.github.io/PaperMote/) is depoloyed on Github Pages, using the `gh-pages` branch of this repo.
+
+[Demo](https://paper-mote.vercel.app/) is deployed on Vercel, using the `main` branch of this repo.
+
+### Installation
+
+#### Prerequisites
+-   Node.js
+-   npm, pnpm, or yarn
+-   Git
+
+#### Installation and Running
+```bash
+git clone https://github.com/luoyaqifei/PaperMote.git
+cd PaperMote
+```
+Copy `.env.example` to `.env` and set the correct environment variables.
+- For Google Books API, no key is needed.
+- For Postgres, you can use Vercel Postgres and pull the secrets from Vercel dashboard, or run one locally using Docker, Dockerfile is not included in this repo, however there is an official [reference](https://vercel.com/docs/storage/vercel-postgres/local-development). 
+- For cloudinary, create an account and pull the secrets from [Cloudinary Dashboard](https://cloudinary.com/console).
+- For Auth.js, you don't need anything in local, but if you deploy it to Vercel or other production environment, you need to create an SSH secret using
+`$ openssl rand -base64 32` and copy this into `AUTH_SECRET` in `.env` as instructed in [NextAuth Dashboard](hhttps://authjs.dev/reference/nextjs).
+
+```bash
+npm install
+npm run dev
+```
+After the server is running, you need to use Postman or curl to `GET` the route `/seed` to populate the tables with data.
 
 ### Problem Space
 
 Paperbooks are a great way to read, but they can be difficult to annotate and take notes on. PaperMote solves this problem by providing a platform for users to easily annotate and take notes on their paperbooks.
+
 
 ### User Profile
 

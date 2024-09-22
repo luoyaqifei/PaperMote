@@ -26,7 +26,7 @@ async function createBooksTable() {
         title VARCHAR(255) NOT NULL,
         author VARCHAR(255),
         description TEXT,
-        cover TEXT,
+        cover VARCHAR(255),
         page_count INTEGER,
         published_date DATE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -43,8 +43,9 @@ async function createNotesTable() {
     await client.sql`
     CREATE TABLE IF NOT EXISTS notes (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        title VARCHAR(255) NOT NULL,
+        title VARCHAR(255),
         content TEXT NOT NULL,
+        book_location INTEGER,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         book_id UUID NOT NULL,

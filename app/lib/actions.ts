@@ -16,7 +16,7 @@ import { generateFromEmail } from "unique-username-generator";
 import { parseWithZod } from "@conform-to/zod";
 import { SignupSchema } from "./schema";
 import { BookFromApi, User } from "./definitions";
-import { fetchBook, getCurrentUser } from "./data";
+import { getCurrentUser } from "./data";
 
 export async function signup(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
@@ -98,6 +98,7 @@ export async function updateUser(prevState: unknown, formData: FormData) {
   if (submission.status !== "success") {
     return submission.reply();
   }
+  // TODO: check if email is already taken
   const { username, email, id } = submission.value;
   try {
     const users = await sql<User>`
@@ -152,20 +153,21 @@ export async function addBook(prevState: unknown, formData: FormData) {
 }
 
 export async function updateBookFromApi(book: BookFromApi, book_id: string) {
-  // TODO: fix book db schema
   const bookData = {
     title: book.title,
     author: book.authors?.join(", "),
     description: book.description,
-    // published_date: book.publishedDate,
-    // page_count: book.pageCount,
-    cover: book.imageLinks.thumbnail,
+    published_date: book.publishedDate,
+    page_count: book.pageCount,
+    cover: book.imageLinks?.thumbnail ?? "/book-cover.png",
     updated_at: new Date().toISOString(),
   };
   try {
     await sql`
       UPDATE books
-      SET title = ${bookData.title}, author = ${bookData.author}, description = ${bookData.description}, cover = ${bookData.cover}, updated_at = ${bookData.updated_at}
+      SET title = ${bookData.title}, author = ${bookData.author}, description = ${bookData.description}, 
+      cover = ${bookData.cover}, published_date = ${bookData.published_date}, 
+      page_count = ${bookData.page_count}, updated_at = ${bookData.updated_at}
       WHERE id = ${book_id}
     `;
   } catch (error) {
@@ -215,14 +217,16 @@ export async function addNote(prevState: unknown, formData: FormData) {
   if (submission.status !== "success") {
     return submission.reply();
   }
-  const { title, content, book_id } = submission.value;
+  console.log(submission.value);
+  const { title, content, book_id, book_location } = submission.value;
 
   try {
     await sql`
-      INSERT INTO notes (title, content, book_id)
-      VALUES (${title}, ${content}, ${book_id})
+      INSERT INTO notes (title, content, book_id, book_location)
+      VALUES (${title}, ${content}, ${book_id}, ${book_location})
     `;
   } catch (error) {
+    console.log(error);
     return {
       message: "Database Error: Failed to add note",
       status: "error",
