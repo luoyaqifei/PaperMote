@@ -2,17 +2,15 @@ import {
   Navbar,
   NavbarBrand,
   NavbarContent,
-  NavbarItem,
   Link,
-  Skeleton,
+  Button,
 } from "@nextui-org/react";
-import Logo from "./logo";
-import { UserDropdown } from "../user/user-dropdown";
+import Logo from "@/app/ui/components/logo";
+import { UserDropdown } from "@/app/ui/components/user-dropdown";
 import { getCurrentUser } from "@/app/lib/data";
 import { User } from "@/app/lib/definitions";
-import { colorPalette, fontSize } from "../style-variants/variables";
-import { alegreyaSans } from "../fonts";
-
+import { colorPalette, fontSize } from "@/app/ui/style-variants/variables";
+import { alegreyaSans } from "@/app/ui/style-variants/fonts";
 export default async function Sidenav() {
   const user = await getCurrentUser();
   return (
@@ -23,13 +21,10 @@ export default async function Sidenav() {
           <p className={`font-bold text-inherit ml-2 ${fontSize.lg}`}>PaperMote</p>
         </Link>
       </NavbarBrand>
-      {/* <NavbarContent className="hidden sm:flex" justify="center">
-        <NavbarItem>
-          placeholder
-        </NavbarItem>
-      </NavbarContent> */}
       <NavbarContent justify="end">
-        <UserDropdown user={user as User} />
+        {user 
+        ? <UserDropdown user={user as User} /> 
+        : <Button href="/login" className={`${colorPalette.secondary} ${alegreyaSans.className}`} as={Link}>Login / Signup</Button>}
       </NavbarContent>
     </Navbar>
   );

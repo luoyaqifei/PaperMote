@@ -34,6 +34,7 @@ Copy `.env.example` to `.env` and set the correct environment variables.
 npm install
 npm run dev
 ```
+After the server is running, you need to use Postman or curl to `GET` the route `/seed` to populate the tables with data.
 
 ### Problem Space
 

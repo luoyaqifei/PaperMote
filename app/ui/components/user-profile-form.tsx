@@ -8,9 +8,9 @@ import { parseWithZod } from "@conform-to/zod";
 import { Avatar, Button, Input } from "@nextui-org/react";
 import { useFormState } from "react-dom";
 import { useToast } from "@/app/lib/hooks";
-import { button } from "../style-variants/button";
-import { headline } from "../style-variants/headline";
-import { input } from "../style-variants/input";
+import { button } from "@/app/ui/style-variants/button";
+import { headline } from "@/app/ui/style-variants/headline";
+import { input } from "@/app/ui/style-variants/input";
 
 export const UserProfileForm = ({ user }: { user: User }) => {
   const [lastResult, action] = useFormState(updateUser, undefined);
@@ -30,8 +30,8 @@ export const UserProfileForm = ({ user }: { user: User }) => {
   useToast(lastResult as SubmissionResult<string[]> | null);
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className={headline({size: "2xl", color: "primary"})}>User Profile</h1>
+    <div className="p-6">
+      <h1 className={headline({size: "3xl", color: "primary"})}>User Profile</h1>
       <div className="flex items-center mb-6">
         <Avatar
           src={user?.avatar ?? generateAvatar(user.username)}

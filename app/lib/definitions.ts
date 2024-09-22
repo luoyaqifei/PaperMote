@@ -15,8 +15,8 @@ export interface Book {
   description: string;
   user_id: string;
   cover: string;
-  published_date: string;
-  page_count: number;
+  published_date?: string;
+  page_count?: number;
   created_at: string;
   updated_at: string;
 }

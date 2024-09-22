@@ -18,9 +18,9 @@ import { useToast } from "@/app/lib/hooks";
 import { UpdateBookSchema } from "@/app/lib/schema";
 import { useForm, SubmissionResult } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { button } from "../style-variants/button";
-import { modal } from "../style-variants/modal";
-import { input } from "../style-variants/input";
+import { button } from "@/app/ui/style-variants/button";
+import { modal } from "@/app/ui/style-variants/modal";
+import { input } from "@/app/ui/style-variants/input";
 
 export default function EditBook({ book }: { book: Book }) {
   const [isOpen, setIsOpen] = useState(false);

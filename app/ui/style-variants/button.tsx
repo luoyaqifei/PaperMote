@@ -1,6 +1,6 @@
 import { tv } from 'tailwind-variants';
-import { colorPalette, fontSize } from './variables';
-import { alegreyaSans } from '../fonts';
+import { colorPalette, fontSize } from '@/app/ui/style-variants/variables';
+import { alegreyaSans } from './fonts';
 
 export const button = tv({
   base: `px-4 py-1.5 rounded-full hover:opacity-80 ${alegreyaSans.className} font-semibold`,

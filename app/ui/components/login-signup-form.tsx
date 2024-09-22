@@ -7,8 +7,8 @@ import { LoginSchema, SignupSchema } from "@/app/lib/schema";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useToast } from "@/app/lib/hooks";
-import { button } from "../style-variants/button";
-import { input } from "../style-variants/input";
+import { button } from "@/app/ui/style-variants/button";
+import { input } from "@/app/ui/style-variants/input";
 
 export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
   const [lastResult, action] = useFormState(isLogin ? authenticate : signup, undefined);
@@ -19,6 +19,10 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
     },
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
+    defaultValue: {
+      email: "",
+      password: ""
+    }
   });
   useToast(lastResult as SubmissionResult<string[]> | null);
 
@@ -26,6 +30,7 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
     <>
       <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate className="space-y-4">
         <Input
+          autoComplete="none"
           classNames={{
             input: input().input(),
             label: input().label(),
@@ -40,6 +45,7 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
           errorMessage={fields.email.errors}
         />
         <Input
+          autoComplete="none"
           label="Password"
           type="password"
           key={fields.password.key}
@@ -53,7 +59,7 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
             inputWrapper: input().inputWrapper()
           }}
         />
-        <Button type="submit" className={button({color: "primary"})}>
+        <Button type="submit" className={`${button({color: "secondary"})} w-full`}>
           {isLogin ? "Login" : "Sign Up"}
         </Button>
         {form.errors && (

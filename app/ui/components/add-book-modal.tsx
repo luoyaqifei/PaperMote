@@ -1,5 +1,5 @@
 "use client";
-import { addNote } from "@/app/lib/actions";
+import { addBook } from "@/app/lib/actions";
 import {
   Button,
   Modal,
@@ -9,40 +9,35 @@ import {
   ModalFooter,
   Input,
 } from "@nextui-org/react";
-import { SubmissionResult, useForm, useInputControl } from "@conform-to/react";
+import { SubmissionResult, useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { useFormState, useFormStatus } from "react-dom";
-import { AddNoteSchema } from "@/app/lib/schema";
-import Editor from "./editor";
+import { AddBookSchema } from "@/app/lib/schema";
 import { useToast } from "@/app/lib/hooks";
-import { button } from "../style-variants/button";
-import { modal } from "../style-variants/modal";
-import { input } from "../style-variants/input";
+import { button } from "@/app/ui/style-variants/button";
+import { modal } from "@/app/ui/style-variants/modal";
+import { input } from "@/app/ui/style-variants/input";
 import { useEffect } from "react";
-
-export default function AddNoteModal({
+export default function AddBookModal({
   isOpen,
   onOpenChange,
   onClose,
-  bookId,
 }: {
   isOpen: boolean;
-  onOpenChange: () => void;
+  onOpenChange: (isOpen: boolean) => void;
   onClose: () => void;
-  bookId: string;
 }) {
-  const [lastResult, action] = useFormState(addNote, undefined);
+  const [lastResult, action] = useFormState(addBook, undefined);
   const { pending } = useFormStatus();
   const [form, fields] = useForm({
     lastResult: lastResult as SubmissionResult<string[]> | null,
     onValidate({ formData }) {
-      return parseWithZod(formData, { schema: AddNoteSchema });
+      return parseWithZod(formData, { schema: AddBookSchema });
     },
     shouldValidate: "onSubmit",
     shouldRevalidate: "onBlur",
   });
 
-  const contentInputControl = useInputControl(fields.content);
   useEffect(() => {
     if (lastResult?.status === "success") {
       onClose();
@@ -50,13 +45,13 @@ export default function AddNoteModal({
   }, [lastResult]);
 
   useToast(lastResult as SubmissionResult<string[]> | null);
+
   return (
     <Modal
       isDismissable={false}
       isOpen={isOpen}
       onClose={() => {
         form.reset();
-        contentInputControl.change("");
       }}
       onOpenChange={onOpenChange}
       placement="top-center"
@@ -68,45 +63,49 @@ export default function AddNoteModal({
         footer: modal().footer(),
       }}
     >
-      <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
+      <form
+        id={form.id}
+        onSubmit={form.onSubmit}
+        action={action}
+        noValidate
+      >
         <ModalContent>
-          <ModalHeader>New Note</ModalHeader>
+          <ModalHeader>New Book</ModalHeader>
           <ModalBody>
-            <Input type="hidden" name="book_id" value={bookId} />
             <Input
               label="Title"
-              placeholder="Enter note title"
+              placeholder="Enter book title"
+              autoFocus
+              defaultValue={fields.title.value}
               key={fields.title.key}
               name={fields.title.name}
-              id={fields.title.id}
-              isInvalid={!!fields.title.errors}
               errorMessage={fields.title.errors}
+              isInvalid={!!fields.title.errors}
               classNames={{
                 input: input().input(),
                 label: input().label(),
                 inputWrapper: input().inputWrapper(),
               }}
             />
-            <Editor
-              name={fields.content.name}
-              content={fields.content.value || ""}
-              isInvalid={!!fields.content.errors}
-              errors={fields.content.errors}
-              onUpdate={(c) => {
-                contentInputControl.change(c);
-              }}
-              onBlur={() => {
-                if (fields.content.value === "") {
-                  contentInputControl.change("");
-                }
+            <Input
+              label="Author"
+              placeholder="Enter book author"
+              defaultValue={fields.author.value}
+              key={fields.author.key}
+              name={fields.author.name}
+              isInvalid={!!fields.author.errors}
+              errorMessage={fields.author.errors}
+              classNames={{
+                input: input().input(),
+                inputWrapper: input().inputWrapper(),
+                label: input().label(),
               }}
             />
           </ModalBody>
           <ModalFooter>
             <Button
-              type="button"
               className={button({ color: "neutral", flat: true })}
-              onClick={() => onClose()}
+              onClick={onClose}
             >
               Cancel
             </Button>
@@ -115,7 +114,7 @@ export default function AddNoteModal({
               disabled={pending}
               className={button({ color: "primary" })}
             >
-              Add Note
+              Add Book
             </Button>
           </ModalFooter>
         </ModalContent>

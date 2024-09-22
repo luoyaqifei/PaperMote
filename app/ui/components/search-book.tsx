@@ -16,8 +16,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { SubmissionResult } from "@conform-to/react";
 import { setToast } from "@/app/lib/client-utils";
-import { button } from "../style-variants/button";
-import { modal } from "../style-variants/modal";
+import { button } from "@/app/ui/style-variants/button";
+import { modal } from "@/app/ui/style-variants/modal";
 
 export default function SearchBook({ book }: { book: Book }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,7 +70,7 @@ export default function SearchBook({ book }: { book: Book }) {
                 >
                   {bookResult.imageLinks?.thumbnail && (
                     <Image
-                      src={bookResult.imageLinks.thumbnail}
+                      src={bookResult.imageLinks?.thumbnail ?? "/book-cover.png"}
                       alt={bookResult.title}
                       width={50}
                       height={75}

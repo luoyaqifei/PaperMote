@@ -4,16 +4,11 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Button,
   Avatar,
-  Link,
   Skeleton,
 } from "@nextui-org/react";
 import { User } from "@/app/lib/definitions";
 import { signOutAction } from "@/app/lib/actions";
-import { generateAvatar } from "@/app/lib/client-utils";
-import { button } from "../style-variants/button";
-import { useState } from "react";
 
 export function UserDropdown({ user }: { user: User}) {
   const handleSignOut = async () => {

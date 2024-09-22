@@ -1,6 +1,6 @@
 import { tv } from 'tailwind-variants';
-import { textColor, fontSize } from './variables';
-import { alegreyaSans } from '../fonts';
+import { textColor, fontSize } from '../style-variants/variables';
+import { alegreyaSans } from '../style-variants/fonts';
 
 export const headline = tv({
 	base: `${alegreyaSans.className} ${textColor.base} font-bold m-0 p-0`,

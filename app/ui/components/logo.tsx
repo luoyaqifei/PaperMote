@@ -6,7 +6,8 @@ export default function Logo() {
       <Image
         src="/logo.svg"
         alt="PaperMote Logo"
-        fill
+        fill={true}
+        quality={100}
         sizes="100vw"
         style={{
           objectFit: "contain"

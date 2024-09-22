@@ -14,7 +14,7 @@ import {
 	ArrowUturnRightIcon
 } from "@heroicons/react/24/outline";
 import { Button, Card } from '@nextui-org/react';
-import { borderColor } from "../style-variants/variables";
+import { borderColor } from "@/app/ui/style-variants/variables";
 
 export default function Editor({ content, onUpdate, onBlur, isInvalid, errors, name }:
      { content: string, onUpdate: (content: string) => void, onBlur: () => void, isInvalid?: boolean, errors: string[] | undefined, name: string }) {
