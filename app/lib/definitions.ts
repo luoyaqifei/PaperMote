@@ -37,8 +37,7 @@ export interface Note {
   title: string;
   content: string;
   book_id: string;
-  user_id: string;
-  book_location: string;
+  book_location: number;
   created_at: string;
   updated_at: string;
 }

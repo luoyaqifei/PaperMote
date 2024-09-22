@@ -21,7 +21,7 @@ const BookSchema = z.object({
 
 const NoteSchema = z.object({
     id: z.string().optional(),
-    title: z.string().min(1),
+    title: z.string().min(1).optional(),
     content: z.string().min(1),
     created_at: z.date().optional(),
     updated_at: z.date().optional(),
@@ -31,6 +31,7 @@ const NoteSchema = z.object({
 
 export const AddBookSchema = BookSchema.omit({id: true, created_at: true, updated_at: true});
 export const AddNoteSchema = NoteSchema.omit({id: true, created_at: true, updated_at: true});
+export const UpdateNoteSchema = NoteSchema.omit({created_at: true, updated_at: true});
 export const UpdateBookSchema = BookSchema.omit({created_at: true, updated_at: true, cover: true});
 export const LoginSchema = UserSchema.omit({id: true, username: true, avatar: true});
 export const SignupSchema = UserSchema.omit({id: true, username: true, avatar: true});

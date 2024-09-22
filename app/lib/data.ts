@@ -47,11 +47,31 @@ export const fetchBook = async (bookId: string) => {
 
 export const fetchNotes = async (bookId: string) => {
   try {
-    const data = await sql<Note>`SELECT * FROM notes WHERE book_id=${bookId}`;
+    const data = await sql<Note>`SELECT * FROM notes WHERE book_id=${bookId} ORDER BY updated_at DESC`;
     return data.rows;
   } catch (error) {
     console.error(error);
     return [];
+  }
+};
+
+export const fetchNote = async (noteId: string) => {
+  try {
+    const data = await sql<Note>`SELECT * FROM notes WHERE id=${noteId} LIMIT 1`;
+    return data.rows[0];
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getNoteWithLastLocation = async (bookId: string) => {
+  try {
+    const data = await sql<Note>`SELECT * FROM notes WHERE book_id=${bookId} and book_location is not null ORDER BY book_location DESC LIMIT 1`;
+    return data.rows[0];
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 };
 
