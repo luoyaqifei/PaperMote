@@ -41,7 +41,7 @@ export default function AboutMe() {
         </CardHeader>
         <CardBody className="text-center">
           <p className="text-gray-600">
-            Hi, I'm Mingxia Z. Welcome to my bookshelf!
+            Hi, my name is Mingxia Z. Welcome to my bookshelf!
           </p>
         </CardBody>
         <CardFooter className="justify-center">

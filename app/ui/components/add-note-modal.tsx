@@ -47,7 +47,7 @@ export default function AddNoteModal({
     if (lastResult?.status === "success") {
       onClose();
     }
-  }, [lastResult]);
+  }, [lastResult, onClose]);
 
   useToast(lastResult as SubmissionResult<string[]> | null);
   return (
@@ -100,15 +100,9 @@ export default function AddNoteModal({
             <Editor
               name={fields.content.name}
               content={fields.content.value || ""}
-              isInvalid={!!fields.content.errors}
               errors={fields.content.errors}
               onUpdate={(c) => {
                 contentInputControl.change(c);
-              }}
-              onBlur={() => {
-                if (fields.content.value === "") {
-                  contentInputControl.change("");
-                }
               }}
             />
           </ModalBody>

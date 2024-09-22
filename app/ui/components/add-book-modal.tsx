@@ -42,7 +42,7 @@ export default function AddBookModal({
     if (lastResult?.status === "success") {
       onClose();
     }
-  }, [lastResult]);
+  }, [lastResult, onClose]);
 
   useToast(lastResult as SubmissionResult<string[]> | null);
 

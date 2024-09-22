@@ -6,7 +6,6 @@ import Image from '@tiptap/extension-image';
 import { 
 	BoldIcon, 
 	ItalicIcon, 
-	PhotoIcon
 } from "@heroicons/react/24/solid";
 import {
 	StrikethroughIcon,
@@ -16,8 +15,8 @@ import {
 import { Button, Card } from '@nextui-org/react';
 import { borderColor } from "@/app/ui/style-variants/variables";
 
-export default function Editor({ content, onUpdate, onBlur, isInvalid, errors, name }:
-     { content: string, onUpdate: (content: string) => void, onBlur: () => void, isInvalid?: boolean, errors: string[] | undefined, name: string }) {
+export default function Editor({ content, onUpdate, errors, name }:
+     { content: string, onUpdate: (content: string) => void, errors: string[] | undefined, name: string }) {
 	const editor = useEditor({
 		extensions: [StarterKit, Image],
 		content: content,
@@ -34,12 +33,12 @@ export default function Editor({ content, onUpdate, onBlur, isInvalid, errors, n
 		},
 	});
 
-	const addImage = () => {
-		const url = window.prompt('URL')
-		if (url) {
-			editor?.chain().focus().setImage({ src: url }).run()
-		}
-	}
+	// const addImage = () => {
+	// 	const url = window.prompt('URL')
+	// 	if (url) {
+	// 		editor?.chain().focus().setImage({ src: url }).run()
+	// 	}
+	// }
 
 	return (
 		<Card className="button">

@@ -1,10 +1,6 @@
 "use client";
 import {
-  Card,
-  CardBody,
-  CardHeader,
   Chip,
-  Tab,
   Table,
   TableBody,
   TableCell,
@@ -12,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { backgroundColor, colorPalette, textColor } from "@/app/ui/style-variants/variables";
+import { colorPalette } from "@/app/ui/style-variants/variables";
 import { headline } from "@/app/ui/style-variants/headline";
 import { Note } from "@/app/lib/definitions";
 

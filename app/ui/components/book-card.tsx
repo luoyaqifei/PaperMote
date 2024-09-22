@@ -1,5 +1,3 @@
-import { Book } from "@/app/lib/definitions";
-import { BookOpenIcon } from "@heroicons/react/24/outline";
 import { Card } from "@nextui-org/react";
 
 export default function BookCard({

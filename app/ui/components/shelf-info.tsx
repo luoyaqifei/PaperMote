@@ -1,7 +1,7 @@
 "use client";
 
 import { Book } from "@/app/lib/definitions";
-import { Skeleton, Card, CardBody, Divider, Chip } from "@nextui-org/react";
+import { Card, CardBody, Divider, Chip } from "@nextui-org/react";
 import { colorPalette, fontSize } from "@/app/ui/style-variants/variables";
 
 export default function ShelfInfo({ books }: { books: Book[] }) {
