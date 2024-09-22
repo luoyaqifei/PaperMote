@@ -6,7 +6,7 @@ export default function NotFound() {
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-wood-texture">
 			<h1 className={headline({ size: "2xl", color: "primary" })}>404 - Page Not Found</h1>
-			<p className="text-xl mb-8">Oops! The page you're looking for doesn't exist.</p>
+			<p className="text-xl mb-8">Oops! The page you are looking for does not exist.</p>
 			<Link
 				href="/dashboard"
 				className={button({ color: "primary", size: "lg" })}

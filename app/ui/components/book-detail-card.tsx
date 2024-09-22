@@ -1,4 +1,3 @@
-import { fetchBook } from "@/app/lib/data";
 import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react";
 import SearchBook from "@/app/ui/components/search-book";
 import EditBook from "@/app/ui/components/edit-book";
