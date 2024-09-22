@@ -6,12 +6,12 @@ import BackgroundImage from "@/app/ui/components/background-image";
 
 export default function Signup() {
   return (
-    <div className={`container flex flex-col items-center justify-center min-h-screen mx-auto`}>
+    <article className={`container flex flex-col items-center justify-center min-h-screen mx-auto`}>
       <BackgroundImage />
       <Card className={`w-full p-8 rounded-lg shadow-lg ${backgroundColor.primary} opacity-90`}>
         <h1 className={headline({size: "3xl", color: "primary"})}>Sign Up</h1>
         <LoginOrSignupForm isLogin={false} />
       </Card>
-    </div>
+    </article>
   )
 }

@@ -1,4 +1,3 @@
-import { fetchBook } from "@/app/lib/data";
 import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react";
 import SearchBook from "@/app/ui/components/search-book";
 import EditBook from "@/app/ui/components/edit-book";
@@ -6,11 +5,9 @@ import Image from "next/image";
 import { headline } from "@/app/ui/style-variants/headline";
 import { backgroundColor } from "@/app/ui/style-variants/variables";
 import { BookmarkSquareIcon } from "@heroicons/react/24/outline";
+import { Book } from "@/app/lib/definitions";
 
-export default async function BookDetailCard({ bookId }: { bookId: string }) {
-  const book = await fetchBook(bookId);
-  if (!book) return null;
-
+export default function BookDetailCard({ book }: { book: Book }) {
   return (
     <Card className="bg-white">
       <CardHeader

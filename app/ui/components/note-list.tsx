@@ -14,7 +14,7 @@ import { Note } from "@/app/lib/definitions";
 
 export default function NoteList({ notes }: { notes: Note[] }) {
   return (
-    <div className="space-y-4">
+    <section className="space-y-4">
       <h3 className={headline({ color: "primary", size: "lg" })}>Notes</h3>
       <Table>
         <TableHeader className={`capitalize text-default-600 ${colorPalette.primary}`}>
@@ -42,6 +42,6 @@ export default function NoteList({ notes }: { notes: Note[] }) {
           ))}
         </TableBody>
       </Table>
-    </div>
+    </section>
   );
 }

@@ -6,12 +6,12 @@ import { backgroundColor } from "@/app/ui/style-variants/variables";
 
 export default function Login() {
   return (
-    <div className={`container flex flex-col items-center justify-center min-h-screen mx-auto`}>
+    <article className={`container flex flex-col items-center justify-center min-h-screen mx-auto`}>
       <BackgroundImage />
       <Card className={`w-full p-8 bg-white rounded-lg shadow-lg ${backgroundColor.primary} opacity-90`}>
         <h1 className={headline({size: "3xl", color: "primary"})}>Login</h1>
         <LoginOrSignupForm isLogin={true} />
       </Card>
-    </div>
+    </article>
   )
 }

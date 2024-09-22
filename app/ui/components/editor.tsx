@@ -42,7 +42,7 @@ export default function Editor({ content, onUpdate, errors, name }:
 
 	return (
 		<Card className="button">
-			<div className="flex flex-wrap gap-2 mb-4">
+			<section className="flex flex-wrap gap-2 mb-4">
 				<Button
 					size="sm"
                     startContent={<BoldIcon className="w-4 h-4" />}
@@ -76,7 +76,7 @@ export default function Editor({ content, onUpdate, errors, name }:
 					onClick={() => editor?.chain().focus().redo().run()}
 				>
 				</Button>
-			</div>
+			</section>
 			<EditorContent 
 				editor={editor}
 				className={`h-full min-h-[200px] border ${errors ? 'border-danger' : borderColor} rounded p-2`}

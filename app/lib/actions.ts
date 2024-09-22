@@ -157,8 +157,8 @@ export async function updateBookFromApi(book: BookFromApi, book_id: string) {
     title: book.title,
     author: book.authors?.join(", "),
     description: book.description,
-    published_date: book.publishedDate,
-    page_count: book.pageCount,
+    published_date: book.publishedDate ? new Date(book.publishedDate).toLocaleDateString() : "",
+    page_count: book.pageCount ?? "",
     cover: book.imageLinks?.thumbnail ?? "/book-cover.png",
     updated_at: new Date().toISOString(),
   };

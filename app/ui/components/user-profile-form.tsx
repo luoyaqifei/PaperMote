@@ -30,9 +30,9 @@ export const UserProfileForm = ({ user }: { user: User }) => {
   useToast(lastResult as SubmissionResult<string[]> | null);
 
   return (
-    <div className="p-6">
+    <article className="p-6">
       <h1 className={headline({size: "3xl", color: "primary"})}>User Profile</h1>
-      <div className="flex items-center mb-6">
+      <section className="flex items-center mb-6">
         <Avatar
           src={user?.avatar ?? generateAvatar(user.username)}
           alt="Avatar"
@@ -77,7 +77,7 @@ export const UserProfileForm = ({ user }: { user: User }) => {
             <div className="text-red-500 mt-2">{form.errors}</div>
           )}
         </form>
-      </div>
-    </div>
+      </section>
+    </article>
   );
 };

@@ -11,9 +11,6 @@ export default async function DashboardPage() {
       <div className="mb-8 flex flex-col justify-between">
         <section className="flex flex-col justify-between">
           <ShelfInfo books={books} />
-          <div className="flex justify-end">
-            
-          </div>
         </section>
         <section>
           <BookList books={books} />

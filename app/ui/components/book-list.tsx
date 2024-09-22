@@ -4,9 +4,9 @@ import { BookOpenIcon } from "@heroicons/react/24/outline";
 import AddBook from "@/app/ui/components/add-book";
 import BookCard from "@/app/ui/components/book-card";
 
-export default async function BookList({ books }: { books: Book[] }) {
+export default function BookList({ books }: { books: Book[] }) {
   return (
-    <div className="flex flex-wrap justify-center gap-4 p-4 bg-wood-texture">
+    <section className="flex flex-wrap justify-center gap-4 p-4 bg-wood-texture">
       <AddBook />
       {books.length > 0 ? (
         books.map((book) => (
@@ -32,6 +32,6 @@ export default async function BookList({ books }: { books: Book[] }) {
           <p className="text-gray-500">Add your first book to get started!</p>
         </div>
       )}
-    </div>
+    </section>
   );
 }

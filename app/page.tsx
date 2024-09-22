@@ -7,7 +7,7 @@ import { backgroundColor } from "@/app/ui/style-variants/variables";
 
 export default function App() {
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex-grow flex flex-col">
       <header className={`relative h-64 w-full ${backgroundColor.primary}`}>
         <Image
           src="/image.png"
@@ -22,10 +22,11 @@ export default function App() {
         </div>
       </header>
       <main className="flex-grow flex flex-col p-8 max-w-7xl mx-auto w-full">
-        <Instruction />
-        <div className="flex justify-center space-x-4 mb-8 mt-8">
-          <Button as="a" href="/login" size="lg" className={button({color: "primary", size: "lg"})}>Login / Signup</Button>
+        <Instruction>
+        <div className="flex justify-center space-x-4 mb-8 mt-8 w-full">
+          <Button as="a" href="/login" size="lg" className={`${button({color: "primary", size: "lg"})} w-full`} >Login / Signup</Button>
         </div>
+        </Instruction>
         <div className="mt-8 text-center">
           <Button as="a" href="/about-me" color="primary" variant="light">About Me</Button>
         </div>
