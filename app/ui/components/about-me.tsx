@@ -18,7 +18,7 @@ export default function AboutMe() {
   };
 
   return (
-    <div>
+    <>
       <Image
         src="/image.png"
         alt="Book cover background"
@@ -53,6 +53,6 @@ export default function AboutMe() {
           </Button>
         </CardFooter>
       </Card>
-    </div>
+    </>
   );
 }

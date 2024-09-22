@@ -14,17 +14,17 @@ export default async function BookPage({ params }: { params: { id: string } }) {
     };
     const notes: Note[] = await fetchNotes(id);
     return (
-        <div className="p-8 bg-wood-texture flex flex-col">
-            <div>
+        <article className="p-8 bg-wood-texture flex flex-col">
+            <section>
                 <BookDetailCard book={book} />
-            </div>
+            </section>
             <Divider className="my-8" />
-            <div className="flex flex-col flex-grow">
+            <section className="flex flex-col flex-grow">
                 <div className="flex justify-end mb-4">
                   <AddNote bookId={id} />
                 </div>
                 <NoteList notes={notes} />
-            </div>
-        </div>
+            </section>
+        </article>
     )
 }

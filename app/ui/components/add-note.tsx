@@ -7,7 +7,7 @@ export default function AddNote({bookId}: {bookId: string}) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   return (
-    <div>
+    <>
       <Button onClick={onOpen} className={button({color: "primary"})}>
         + New Note
       </Button>
@@ -17,6 +17,6 @@ export default function AddNote({bookId}: {bookId: string}) {
         onClose={onClose} 
         bookId={bookId}
       />
-    </div>
+    </>
   );
 }

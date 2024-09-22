@@ -8,9 +8,7 @@ import { backgroundColor } from "@/app/ui/style-variants/variables";
 import { BookmarkSquareIcon } from "@heroicons/react/24/outline";
 import { Book } from "@/app/lib/definitions";
 
-export default async function BookDetailCard({ book }: { book: Book }) {
-
-
+export default function BookDetailCard({ book }: { book: Book }) {
   return (
     <Card className="bg-white">
       <CardHeader

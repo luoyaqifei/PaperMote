@@ -65,11 +65,8 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
         {form.errors && (
           <div className="text-red-500 mt-2">{form.errors}</div>
         )}
-        {lastResult && 'message' in lastResult && (
-          <div className="text-red-500 mt-2">{lastResult.message}</div>
-        )}
       </form>
-      <div className="mt-4 text-center">
+      <section className="mt-4 text-center">
         {isLogin 
           ? <Link href="/signup" className={`${button({color: "primary", flat: true})} hover:underline`}>
               No account? <span className="underline">Sign up</span>
@@ -78,7 +75,7 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
               Already have an account? <span className="underline">Log in</span>
             </Link>
         }
-      </div>
+      </section>
     </>
   );
 }

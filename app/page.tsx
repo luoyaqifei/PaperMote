@@ -7,7 +7,7 @@ import { backgroundColor } from "@/app/ui/style-variants/variables";
 
 export default function App() {
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex-grow flex flex-col">
       <header className={`relative h-64 w-full ${backgroundColor.primary}`}>
         <Image
           src="/image.png"
