@@ -78,7 +78,7 @@ export async function GET() {
 export async function DELETE() {
   try {
     await client.sql`BEGIN`;
-    // await client.sql`DROP TABLE IF EXISTS users CASCADE`;
+    await client.sql`DROP TABLE IF EXISTS users CASCADE`;
     await client.sql`DROP TABLE IF EXISTS books CASCADE`;
     await client.sql`DROP TABLE IF EXISTS notes CASCADE`;
     await client.sql`COMMIT`;

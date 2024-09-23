@@ -22,9 +22,9 @@ export default function NoteCard({ note }: { note: Note }) {
       <CardHeader
         className={`font-bold ${colorPalette.primary} flex justify-between`}
       >
-        {note.title}
+        <span className="text-lg">{note.title}</span>
         <TrashIcon
-          className="w-4 h-4 align-right hover:cursor-pointer hover:scale-110"
+          className="w-4 h-4 hover:cursor-pointer hover:scale-110"
           onClick={() => {
             onOpen();
           }}
