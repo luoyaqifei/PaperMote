@@ -12,6 +12,7 @@ import DeleteModal from "@/app/ui/components/delete-modal";
 import { deleteNote } from "@/app/lib/actions";
 import { setToast } from "@/app/lib/client-utils";
 import { SubmissionResult } from "@conform-to/react";
+import { alegreyaSans } from "@/app/ui/style-variants/fonts";
 
 export default function NoteCard({ note }: { note: Note }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -53,8 +54,14 @@ export default function NoteCard({ note }: { note: Note }) {
         href={`/dashboard/books/${note.book_id}/edit-note/${note.id}`}
       >
         {note.book_location && (
-          <Chip variant="dot" size="sm" color="primary" className="justify-end">
-            Page <span className="font-bold text-lg">{note.book_location}</span>
+          <Chip
+            variant="dot"
+            size="sm"
+            color="primary"
+            className={`justify-end ${alegreyaSans.className}`}
+          >
+            Page{" "}
+            <span className="font-bold text-lg">{note.book_location}</span>
           </Chip>
         )}
         <div

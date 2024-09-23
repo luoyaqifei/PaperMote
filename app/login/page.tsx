@@ -7,7 +7,7 @@ import { backgroundColor } from "@/app/ui/style-variants/variables";
 export default function Login() {
   return (
     <article
-      className={`container flex flex-col items-center justify-center min-h-screen mx-auto`}
+      className={`container flex flex-col items-center justify-center mx-auto`}
     >
       <BackgroundImage />
       <Card

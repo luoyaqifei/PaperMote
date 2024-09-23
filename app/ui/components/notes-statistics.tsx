@@ -4,6 +4,7 @@ import { Chip, Progress } from "@nextui-org/react";
 import Statistics from "@/app/ui/components/statistics";
 import { getNoteWithLastLocation } from "@/app/lib/data";
 import { Book } from "@/app/lib/definitions";
+import { alegreyaSans } from "@/app/ui/style-variants/fonts";
 
 export default async function NotesStatistics({
   book,
@@ -18,7 +19,7 @@ export default async function NotesStatistics({
 
   return (
     <Statistics>
-      <section className={`${fontSize.md} mb-2`}>
+      <section className={`${fontSize.md} mb-2 ${alegreyaSans.className}`}>
         You have{" "}
         <Chip color="primary" variant="flat" size="lg">
           {notes.length}
@@ -27,7 +28,7 @@ export default async function NotesStatistics({
       </section>
       {lastNote?.book_location && book.page_count ? (
         <section
-          className={`${fontSize.md} mb-2 flex justify-start items-end gap-2`}
+          className={`${fontSize.md} mb-2 flex justify-start items-end gap-2 ${alegreyaSans.className}`}
         >
           <span>Your progress of reading this book:</span>
           <Progress

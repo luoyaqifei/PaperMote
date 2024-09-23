@@ -4,11 +4,12 @@ import { Book } from "@/app/lib/definitions";
 import { Divider, Chip } from "@nextui-org/react";
 import { fontSize } from "@/app/ui/style-variants/variables";
 import Statistics from "@/app/ui/components/statistics";
+import { headline } from "@/app/ui/style-variants/headline";
 
 export default function ShelfInfo({ books }: { books: Book[] }) {
   return (
     <Statistics>
-      <h2 className={`${fontSize.xl} font-semibold mb-2`}>
+      <h2 className={`${headline({ size: "xl" })} font-semibold mb-2`}>
         Your Bookshelf Stats
       </h2>
       <Divider className="my-2" />

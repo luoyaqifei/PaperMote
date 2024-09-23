@@ -7,7 +7,7 @@ import BackgroundImage from "@/app/ui/components/background-image";
 export default function Signup() {
   return (
     <article
-      className={`container flex flex-col items-center justify-center min-h-screen mx-auto`}
+      className={`container flex flex-col items-center justify-center mx-auto`}
     >
       <BackgroundImage />
       <Card

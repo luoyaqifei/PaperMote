@@ -6,6 +6,7 @@ import { headline } from "@/app/ui/style-variants/headline";
 import { backgroundColor } from "@/app/ui/style-variants/variables";
 import { BookmarkSquareIcon } from "@heroicons/react/24/outline";
 import { Book } from "@/app/lib/definitions";
+import { alegreyaSans } from "@/app/ui/style-variants/fonts";
 
 export default function BookDetailCard({ book }: { book: Book }) {
   return (
@@ -44,7 +45,7 @@ export default function BookDetailCard({ book }: { book: Book }) {
             )}
           </div>
           <div className="flex-grow flex flex-col gap-2">
-            <div className="flex-grow flex flex-row flex-wrap gap-2">
+            <div className={`flex-grow flex flex-row flex-wrap gap-2 ${alegreyaSans.className}`}>
               {book.author ? (
                 <Chip color="primary">by {book.author}</Chip>
               ) : null}

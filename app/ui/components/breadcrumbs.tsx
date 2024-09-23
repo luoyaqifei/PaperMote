@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Spinner } from "@nextui-org/react";
 import { BreadCrumbsContext } from "@/app/ui/components/breadcrumbs-context";
-
+import { alegreyaSans } from "@/app/ui/style-variants/fonts";
 const BreadcrumbsItem = ({
   children,
   href,
@@ -26,7 +26,7 @@ const BreadcrumbsContainer = ({
   separator?: string | ReactNode;
 }) => (
   <nav className="min-h-6">
-    <ol className="flex items-center space-x-4">
+    <ol className={`flex items-center space-x-4 ${alegreyaSans.className}`}>
       {Children.map(children, (child, index) => (
         <>
           {child}
