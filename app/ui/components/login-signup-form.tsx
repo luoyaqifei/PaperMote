@@ -10,31 +10,42 @@ import { useToast } from "@/app/lib/hooks";
 import { button } from "@/app/ui/style-variants/button";
 import { input } from "@/app/ui/style-variants/input";
 
-export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
-  const [lastResult, action] = useFormState(isLogin ? authenticate : signup, undefined);
+export default function LoginOrSignupForm({ isLogin }: { isLogin: boolean }) {
+  const [lastResult, action] = useFormState(
+    isLogin ? authenticate : signup,
+    undefined,
+  );
   const [form, fields] = useForm({
     lastResult: lastResult as SubmissionResult<string[]> | null,
     onValidate({ formData }) {
-      return parseWithZod(formData, { schema: isLogin ? LoginSchema : SignupSchema });
+      return parseWithZod(formData, {
+        schema: isLogin ? LoginSchema : SignupSchema,
+      });
     },
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
     defaultValue: {
       email: "",
-      password: ""
-    }
+      password: "",
+    },
   });
   useToast(lastResult as SubmissionResult<string[]> | null);
 
   return (
     <>
-      <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate className="space-y-4">
+      <form
+        id={form.id}
+        onSubmit={form.onSubmit}
+        action={action}
+        noValidate
+        className="space-y-4"
+      >
         <Input
           autoComplete="none"
           classNames={{
             input: input().input(),
             label: input().label(),
-            inputWrapper: input().inputWrapper()
+            inputWrapper: input().inputWrapper(),
           }}
           label="Email"
           type="email"
@@ -56,25 +67,33 @@ export default function LoginOrSignupForm({isLogin}: {isLogin: boolean}) {
           classNames={{
             input: input().input(),
             label: input().label(),
-            inputWrapper: input().inputWrapper()
+            inputWrapper: input().inputWrapper(),
           }}
         />
-        <Button type="submit" className={`${button({color: "secondary"})} w-full`}>
+        <Button
+          type="submit"
+          className={`${button({ color: "secondary" })} w-full`}
+        >
           {isLogin ? "Login" : "Sign Up"}
         </Button>
-        {form.errors && (
-          <div className="text-red-500 mt-2">{form.errors}</div>
-        )}
+        {form.errors && <div className="text-red-500 mt-2">{form.errors}</div>}
       </form>
       <section className="mt-4 text-center">
-        {isLogin 
-          ? <Link href="/signup" className={`${button({color: "primary", flat: true})} hover:underline`}>
-              No account? <span className="underline">Sign up</span>
-            </Link> 
-          : <Link href="/login" className={`${button({color: "primary", flat: true})} hover:underline`}>
-              Already have an account? <span className="underline">Log in</span>
-            </Link>
-        }
+        {isLogin ? (
+          <Link
+            href="/signup"
+            className={`${button({ color: "primary", flat: true })} hover:underline`}
+          >
+            No account? <span className="underline">Sign up</span>
+          </Link>
+        ) : (
+          <Link
+            href="/login"
+            className={`${button({ color: "primary", flat: true })} hover:underline`}
+          >
+            Already have an account? <span className="underline">Log in</span>
+          </Link>
+        )}
       </section>
     </>
   );

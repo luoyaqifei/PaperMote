@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials"
-import { getUserByEmail, getUserById } from "./app/lib/data";
-import { verifyPassword } from "./app/lib/utils";
-import { authConfig } from "./auth.config";
-import { User } from "./app/lib/definitions";
+import Credentials from "next-auth/providers/credentials";
+import { getUserByEmail, getUserById } from "@/app/lib/data";
+import { verifyPassword } from "@/app/lib/utils";
+import { authConfig } from "@/auth.config";
+import { User } from "@/app/lib/definitions";
 
 export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   ...authConfig,
@@ -21,7 +21,10 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
           throw new Error("No user found with that email");
         }
         const passwordHash = user.password;
-        const isPasswordValid = verifyPassword(password as string, passwordHash);
+        const isPasswordValid = verifyPassword(
+          password as string,
+          passwordHash,
+        );
         if (!isPasswordValid) {
           throw new Error("Invalid password");
         }
@@ -36,7 +39,7 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
       if (!user) {
         throw new Error("User not found");
       }
-      session.user = {...session.user, ...user};
+      session.user = { ...session.user, ...user };
       return session;
     },
   },

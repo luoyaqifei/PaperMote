@@ -3,8 +3,8 @@ import { db } from "@vercel/postgres";
 const client = await db.connect();
 
 async function createUsersTable() {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-    await client.sql`
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+  await client.sql`
     CREATE TABLE IF NOT EXISTS users (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
@@ -18,9 +18,9 @@ async function createUsersTable() {
 }
 
 async function createBooksTable() {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
-    await client.sql`
+  await client.sql`
     CREATE TABLE IF NOT EXISTS books (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
@@ -38,9 +38,9 @@ async function createBooksTable() {
 }
 
 async function createNotesTable() {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
-    await client.sql`
+  await client.sql`
     CREATE TABLE IF NOT EXISTS notes (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         title VARCHAR(255),
@@ -55,31 +55,43 @@ async function createNotesTable() {
 }
 
 export async function GET() {
-    try {
-        await client.sql`BEGIN`;
-        await createUsersTable();
-        await createBooksTable();
-        await createNotesTable();
-        await client.sql`COMMIT`;
-        return Response.json({ message: "Tables created successfully" }, { status: 200 });
-    } catch (error) {
-        await client.sql`ROLLBACK`;
-        console.error(error);
-        return Response.json({ message: "Error creating tables", error: error }, { status: 500 });
-    }
+  try {
+    await client.sql`BEGIN`;
+    await createUsersTable();
+    await createBooksTable();
+    await createNotesTable();
+    await client.sql`COMMIT`;
+    return Response.json(
+      { message: "Tables created successfully" },
+      { status: 200 },
+    );
+  } catch (error) {
+    await client.sql`ROLLBACK`;
+    console.error(error);
+    return Response.json(
+      { message: "Error creating tables", error: error },
+      { status: 500 },
+    );
+  }
 }
 
 export async function DELETE() {
-    try {
-        await client.sql`BEGIN`;
-        // await client.sql`DROP TABLE IF EXISTS users CASCADE`;
-        await client.sql`DROP TABLE IF EXISTS books CASCADE`;
-        await client.sql`DROP TABLE IF EXISTS notes CASCADE`;
-        await client.sql`COMMIT`;
-        return Response.json({ message: "Tables deleted successfully" }, { status: 200 });
-    } catch (error) {
-        await client.sql`ROLLBACK`;
-        console.error(error);
-        return Response.json({ message: "Error deleting tables", error: error }, { status: 500 });
-    }
+  try {
+    await client.sql`BEGIN`;
+    // await client.sql`DROP TABLE IF EXISTS users CASCADE`;
+    await client.sql`DROP TABLE IF EXISTS books CASCADE`;
+    await client.sql`DROP TABLE IF EXISTS notes CASCADE`;
+    await client.sql`COMMIT`;
+    return Response.json(
+      { message: "Tables deleted successfully" },
+      { status: 200 },
+    );
+  } catch (error) {
+    await client.sql`ROLLBACK`;
+    console.error(error);
+    return Response.json(
+      { message: "Error deleting tables", error: error },
+      { status: 500 },
+    );
+  }
 }

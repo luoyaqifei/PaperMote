@@ -1,7 +1,7 @@
 "use server";
 
 import { sql } from "@vercel/postgres";
-import { Book, BookFromApi, Note, User } from "./definitions";
+import { Book, BookFromApi, Note, User } from "@/app/lib/definitions";
 import { auth } from "@/auth";
 
 export const fetchBooks = async () => {
@@ -28,10 +28,13 @@ export const searchBooksFromApi = async (book: Book) => {
     query += `+inauthor:"${book.author}"`;
   }
   const response = await fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=5`
+    `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=5`,
   );
   const data = await response.json();
-  return data?.items?.map((item: { volumeInfo: BookFromApi }) => item.volumeInfo) ?? [];
+  return (
+    data?.items?.map((item: { volumeInfo: BookFromApi }) => item.volumeInfo) ??
+    []
+  );
 };
 
 export const fetchBook = async (bookId: string) => {
@@ -47,7 +50,8 @@ export const fetchBook = async (bookId: string) => {
 
 export const fetchNotes = async (bookId: string) => {
   try {
-    const data = await sql<Note>`SELECT * FROM notes WHERE book_id=${bookId} ORDER BY updated_at DESC`;
+    const data =
+      await sql<Note>`SELECT * FROM notes WHERE book_id=${bookId} ORDER BY updated_at DESC`;
     return data.rows;
   } catch (error) {
     console.error(error);
@@ -57,7 +61,8 @@ export const fetchNotes = async (bookId: string) => {
 
 export const fetchNote = async (noteId: string) => {
   try {
-    const data = await sql<Note>`SELECT * FROM notes WHERE id=${noteId} LIMIT 1`;
+    const data =
+      await sql<Note>`SELECT * FROM notes WHERE id=${noteId} LIMIT 1`;
     return data.rows[0];
   } catch (error) {
     console.error(error);
@@ -67,7 +72,8 @@ export const fetchNote = async (noteId: string) => {
 
 export const getNoteWithLastLocation = async (bookId: string) => {
   try {
-    const data = await sql<Note>`SELECT * FROM notes WHERE book_id=${bookId} and book_location is not null ORDER BY book_location DESC LIMIT 1`;
+    const data =
+      await sql<Note>`SELECT * FROM notes WHERE book_id=${bookId} and book_location is not null ORDER BY book_location DESC LIMIT 1`;
     return data.rows[0];
   } catch (error) {
     console.error(error);

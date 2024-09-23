@@ -7,9 +7,9 @@ import {
   LoginSchema,
   UpdateBookSchema,
   UpdateUserSchema,
-} from "./schema";
-import { saltAndHashPassword } from "./utils";
-import { generateAvatar } from "./client-utils";
+} from "@/app/lib/schema";
+import { saltAndHashPassword } from "@/app/lib/utils";
+import { generateAvatar } from "@/app/lib/client-utils";
 import { signIn, signOut, unstable_update } from "@/auth";
 import { AuthError } from "next-auth";
 import { generateFromEmail } from "unique-username-generator";
@@ -17,7 +17,11 @@ import { parseWithZod } from "@conform-to/zod";
 import { SignupSchema, UpdateNoteSchema } from "@/app/lib/schema";
 import { BookFromApi, User } from "@/app/lib/definitions";
 import { getCurrentUser, getUserByEmail } from "@/app/lib/data";
-import { v2 as cloudinary, UploadApiErrorResponse, UploadApiResponse } from "cloudinary";
+import {
+  v2 as cloudinary,
+  UploadApiErrorResponse,
+  UploadApiResponse,
+} from "cloudinary";
 
 export async function signup(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
@@ -113,7 +117,7 @@ export async function updateUser(prevState: unknown, formData: FormData) {
     const users = await sql<User>`
     UPDATE users 
     SET email = ${email}, username = ${username}, avatar = ${generateAvatar(
-      username
+      username,
     )}
     WHERE id = ${id} RETURNING *`;
     unstable_update({ user: users.rows[0] });
@@ -226,6 +230,20 @@ export async function updateBook(prevState: unknown, formData: FormData) {
   };
 }
 
+export async function deleteBook(id: string) {
+  try {
+    await sql`DELETE FROM notes WHERE book_id = ${id}`;
+    await sql`DELETE FROM books WHERE id = ${id}`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to delete book",
+      status: "error",
+    };
+  }
+  revalidatePath("/dashboard");
+  return { message: "Book deleted successfully", status: "success" };
+}
+
 export async function addNote(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
     schema: AddNoteSchema,
@@ -237,7 +255,7 @@ export async function addNote(prevState: unknown, formData: FormData) {
   const { title, content, book_id, book_location } = submission.value;
   const created_at = new Date().toISOString();
   const updated_at = created_at;
-  
+
   try {
     await sql`
       INSERT INTO notes (title, content, book_id, book_location, created_at, updated_at)
@@ -281,20 +299,41 @@ export async function updateNote(prevState: unknown, formData: FormData) {
   return { message: `Note updated successfully`, status: "success" };
 }
 
+export async function deleteNote(id: string, book_id: string) {
+  try {
+    await sql`DELETE FROM notes WHERE id = ${id}`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to delete note",
+      status: "error",
+    };
+  }
+  revalidatePath(`/dashboard/books/${book_id}`);
+  return { message: "Note deleted successfully", status: "success" };
+}
+
 export async function uploadImage(formData: FormData) {
   const file = formData.get("file") as File;
   const arrayBuffer = await file.arrayBuffer();
   const buffer = new Uint8Array(arrayBuffer);
-  const result: UploadApiResponse | undefined = await new Promise((resolve, reject) => {
-    cloudinary.uploader
-      .upload_stream({}, function (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) {
-        if (error) {
-          reject(error);
-          return;
-        }
-        resolve(result);
-      })
-      .end(buffer);
-  });
+  const result: UploadApiResponse | undefined = await new Promise(
+    (resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          {},
+          function (
+            error: UploadApiErrorResponse | undefined,
+            result: UploadApiResponse | undefined,
+          ) {
+            if (error) {
+              reject(error);
+              return;
+            }
+            resolve(result);
+          },
+        )
+        .end(buffer);
+    },
+  );
   return result;
 }

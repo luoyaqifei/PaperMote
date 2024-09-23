@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import {nextui} from "@nextui-org/react";
+import { nextui } from "@nextui-org/react";
 
 const config: Config = {
   content: [
@@ -10,6 +10,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)"],
+        alegreya: ["var(--font-alegreya)"],
+        alegreyaSans: ["var(--font-alegreya-sans)"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

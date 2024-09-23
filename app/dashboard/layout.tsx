@@ -1,5 +1,6 @@
 import { backgroundColor } from "@/app/ui/style-variants/variables";
 import BackgroundImage from "@/app/ui/components/background-image";
+import { BreadCrumbs } from "@/app/ui/components/breadcrumbs";
 
 export default function DashboardLayout({
   children,
@@ -14,7 +15,7 @@ export default function DashboardLayout({
       <main
         className={`flex-grow px-8 py-4 flex flex-col w-full max-w-4xl my-4 mx-auto rounded-lg shadow-lg overflow-hidden ${backgroundColor.neutral} opacity-90`}
       >
-        {children}
+        <BreadCrumbs>{children}</BreadCrumbs>
       </main>
     </div>
   );

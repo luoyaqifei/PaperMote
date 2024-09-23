@@ -8,7 +8,8 @@ export default function BookCard({
   children: React.ReactNode;
 }) {
   return (
-    <Card isBlurred={true}
+    <Card
+      isBlurred={true}
       className="book-spine w-32 h-48 md:w-40 md:h-60 lg:w-48 lg:h-72 rounded-l-lg shadow-md transform hover:scale-105 transition-transform duration-300"
       style={{
         backgroundImage: `url(${backgroundImage})`,

@@ -3,6 +3,7 @@ export const textColor = {
   secondary: "text-indigo-100",
   neutral: "text-gray-700",
   base: "text-gray-800",
+  danger: "text-red-600",
 };
 
 export const borderColor = {
@@ -17,6 +18,7 @@ export const backgroundColor = {
   secondary: `bg-indigo-600`,
   neutral: `bg-gray-100`,
   base: `bg-white`,
+  danger: `bg-red-100`,
 };
 
 export const colorPalette = {
@@ -24,6 +26,7 @@ export const colorPalette = {
   secondary: `${backgroundColor.secondary} ${textColor.secondary}`,
   neutral: `${backgroundColor.neutral} ${textColor.neutral}`,
   base: `${backgroundColor.base} ${textColor.base}`,
+  danger: `${backgroundColor.danger} ${textColor.danger}`,
 };
 
 export const fontSize = {
