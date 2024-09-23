@@ -37,7 +37,7 @@ export default function Editor({
       StarterKit,
       UploadImage.configure({
         uploadFn: upLoadFn,
-        // inline: true,
+        inline: true,
       }),
     ],
     content: content,

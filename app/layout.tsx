@@ -7,6 +7,7 @@ import { backgroundColor, textColor } from "@/app/ui/style-variants/variables";
 import { PresentationChartBarIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Sidenav from "@/app/ui/components/sidenav";
+import { BreadCrumbs } from "./ui/components/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "PaperMote",
@@ -26,7 +27,7 @@ export default function RootLayout({
             className={`flex flex-col w-full min-h-screen items-center justify-between max-w-full ${backgroundColor.neutral}`}
           >
             <Sidenav />
-            {children}
+              {children}
             <footer
               className={`text-sm pt-4 pb-4 flex flex-col gap-2 w-full ${backgroundColor.neutral} opacity-90`}
             >
