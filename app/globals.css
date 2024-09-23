@@ -17,13 +17,13 @@ body {
   blockquote {
     @apply border-l-4 border-gray-500 pl-4;
   }
-  ul { 
+  ul {
     @apply list-inside;
- }
- ul li {
+  }
+  ul li {
     @apply list-disc;
- }
- /* ol { 
+  }
+  /* ol { 
     list-style-type: decimal; 
     list-style-position: inside; 
     @apply list-decimal list-inside;

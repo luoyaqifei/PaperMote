@@ -15,9 +15,7 @@ export default function DashboardLayout({
       <main
         className={`flex-grow px-8 py-4 flex flex-col w-full max-w-4xl my-4 mx-auto rounded-lg shadow-lg overflow-hidden ${backgroundColor.neutral} opacity-90`}
       >
-        <BreadCrumbs>
-          {children}
-        </BreadCrumbs>
+        <BreadCrumbs>{children}</BreadCrumbs>
       </main>
     </div>
   );

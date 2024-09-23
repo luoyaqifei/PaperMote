@@ -31,15 +31,28 @@ export const UserProfileForm = ({ user }: { user: User }) => {
 
   return (
     <article className="p-6">
-      <h1 className={headline({size: "3xl", color: "primary"})}>User Profile</h1>
+      <h1 className={headline({ size: "3xl", color: "primary" })}>
+        User Profile
+      </h1>
       <section className="flex items-center mb-6">
         <Avatar
           src={user?.avatar ?? generateAvatar(user.username)}
           alt="Avatar"
           className="w-20 h-20 overflow-hidden rounded-full mr-4"
         />
-        <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate className="space-y-4 flex-grow">
-          <Input type="hidden" key={fields.id.key} name={fields.id.name} value={user.id} />
+        <form
+          id={form.id}
+          onSubmit={form.onSubmit}
+          action={action}
+          noValidate
+          className="space-y-4 flex-grow"
+        >
+          <Input
+            type="hidden"
+            key={fields.id.key}
+            name={fields.id.name}
+            value={user.id}
+          />
           <Input
             label="Username"
             key={fields.username.key}
@@ -50,7 +63,7 @@ export const UserProfileForm = ({ user }: { user: User }) => {
             classNames={{
               input: input().input(),
               label: input().label(),
-              inputWrapper: input().inputWrapper()
+              inputWrapper: input().inputWrapper(),
             }}
           />
           <Input
@@ -64,13 +77,10 @@ export const UserProfileForm = ({ user }: { user: User }) => {
             classNames={{
               input: input().input(),
               label: input().label(),
-              inputWrapper: input().inputWrapper()
+              inputWrapper: input().inputWrapper(),
             }}
           />
-          <Button
-            type="submit"
-            className={button({color: "primary"})}
-          >
+          <Button type="submit" className={button({ color: "primary" })}>
             Save Changes
           </Button>
           {form.errors && (

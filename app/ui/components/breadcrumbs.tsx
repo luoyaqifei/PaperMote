@@ -6,7 +6,13 @@ import Link from "next/link";
 import { Spinner } from "@nextui-org/react";
 import { BreadCrumbsContext } from "@/app/ui/components/breadcrumbs-context";
 
-const BreadcrumbsItem = ({ children, href }: { children: ReactNode; href: string }) => (
+const BreadcrumbsItem = ({
+  children,
+  href,
+}: {
+  children: ReactNode;
+  href: string;
+}) => (
   <li>
     <Link href={href}>{children}</Link>
   </li>
@@ -45,7 +51,7 @@ export const BreadCrumbs = ({
       trailingPath,
       setTrailingPath,
     }),
-    [trailingPath]
+    [trailingPath],
   );
 
   const pathNames = paths.split("/").filter(Boolean);

@@ -26,7 +26,7 @@ export default function RootLayout({
             className={`flex flex-col w-full min-h-screen items-center justify-between max-w-full ${backgroundColor.neutral}`}
           >
             <Sidenav />
-              {children}
+            {children}
             <footer
               className={`text-sm pt-4 pb-4 flex flex-col gap-2 w-full ${backgroundColor.neutral} opacity-90`}
             >
@@ -35,7 +35,9 @@ export default function RootLayout({
                   Copyright © 2024, All Rights Reserved. Powered By
                   <Link
                     href="https://gravatar.com/7c89d6c6dc42cde3db334389550b45217e30166138bc4a6ce18baeca148d7608"
-                    className={textColor.primary + " font-bold hover:underline mx-1"}
+                    className={
+                      textColor.primary + " font-bold hover:underline mx-1"
+                    }
                   >
                     Mingxia Z.
                   </Link>

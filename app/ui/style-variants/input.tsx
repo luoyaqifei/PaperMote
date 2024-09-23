@@ -1,5 +1,10 @@
 import { tv } from "tailwind-variants";
-import { backgroundColor, borderColor, fontSize, textColor } from "@/app/ui/style-variants/variables";
+import {
+  backgroundColor,
+  borderColor,
+  fontSize,
+  textColor,
+} from "@/app/ui/style-variants/variables";
 import { alegreyaSans } from "@/app/ui/style-variants/fonts";
 
 const slots = {

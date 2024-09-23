@@ -35,7 +35,7 @@ export default function BookList({ books }: { books: Book[] }) {
               variant="flat"
               startContent={<TrashIcon className="w-4 h-4" />}
               className={`absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 bottom-0 right-0 ${button(
-                { color: "danger" }
+                { color: "danger" },
               )} p-4 hover:cursor-pointer hover:scale-110`}
               onClick={() => {
                 onOpen();

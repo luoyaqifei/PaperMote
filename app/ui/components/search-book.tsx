@@ -25,7 +25,7 @@ export default function SearchBook({ book }: { book: Book }) {
   const [isLoading, setIsLoading] = useState(false);
   const handleClick = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    bookResult: BookFromApi
+    bookResult: BookFromApi,
   ) => {
     e.preventDefault();
     const result = await updateBookFromApi(bookResult, book.id);
@@ -70,7 +70,9 @@ export default function SearchBook({ book }: { book: Book }) {
                 >
                   {bookResult.imageLinks?.thumbnail && (
                     <Image
-                      src={bookResult.imageLinks?.thumbnail ?? "/book-cover.png"}
+                      src={
+                        bookResult.imageLinks?.thumbnail ?? "/book-cover.png"
+                      }
                       alt={bookResult.title}
                       width={50}
                       height={75}

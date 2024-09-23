@@ -23,11 +23,16 @@ export default function AddEditNoteForm({
   isEdit?: boolean;
 }) {
   const router = useRouter();
-  const [lastResult, action] = useFormState(isEdit ? updateNote : addNote, undefined);
-  const defaultValues = note ? {
-    ...note,
-    book_id: bookId,
-  } : undefined;
+  const [lastResult, action] = useFormState(
+    isEdit ? updateNote : addNote,
+    undefined,
+  );
+  const defaultValues = note
+    ? {
+        ...note,
+        book_id: bookId,
+      }
+    : undefined;
   const { pending } = useFormStatus();
   const [form, fields] = useForm({
     lastResult: lastResult as SubmissionResult<string[]> | null,
@@ -49,8 +54,16 @@ export default function AddEditNoteForm({
   useToast(lastResult as SubmissionResult<string[]> | null);
 
   return (
-    <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate className="space-y-4">
-      <h2 className="text-2xl font-bold mb-4">{isEdit ? "Edit Note" : "New Note"}</h2>
+    <form
+      id={form.id}
+      onSubmit={form.onSubmit}
+      action={action}
+      noValidate
+      className="space-y-4"
+    >
+      <h2 className="text-2xl font-bold mb-4">
+        {isEdit ? "Edit Note" : "New Note"}
+      </h2>
       <Input type="hidden" name="book_id" value={bookId} />
       <Input type="hidden" name="id" value={note?.id} />
       <Input

@@ -17,7 +17,11 @@ import { parseWithZod } from "@conform-to/zod";
 import { SignupSchema, UpdateNoteSchema } from "@/app/lib/schema";
 import { BookFromApi, User } from "@/app/lib/definitions";
 import { getCurrentUser, getUserByEmail } from "@/app/lib/data";
-import { v2 as cloudinary, UploadApiErrorResponse, UploadApiResponse } from "cloudinary";
+import {
+  v2 as cloudinary,
+  UploadApiErrorResponse,
+  UploadApiResponse,
+} from "cloudinary";
 
 export async function signup(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
@@ -113,7 +117,7 @@ export async function updateUser(prevState: unknown, formData: FormData) {
     const users = await sql<User>`
     UPDATE users 
     SET email = ${email}, username = ${username}, avatar = ${generateAvatar(
-      username
+      username,
     )}
     WHERE id = ${id} RETURNING *`;
     unstable_update({ user: users.rows[0] });
@@ -251,7 +255,7 @@ export async function addNote(prevState: unknown, formData: FormData) {
   const { title, content, book_id, book_location } = submission.value;
   const created_at = new Date().toISOString();
   const updated_at = created_at;
-  
+
   try {
     await sql`
       INSERT INTO notes (title, content, book_id, book_location, created_at, updated_at)
@@ -312,16 +316,24 @@ export async function uploadImage(formData: FormData) {
   const file = formData.get("file") as File;
   const arrayBuffer = await file.arrayBuffer();
   const buffer = new Uint8Array(arrayBuffer);
-  const result: UploadApiResponse | undefined = await new Promise((resolve, reject) => {
-    cloudinary.uploader
-      .upload_stream({}, function (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) {
-        if (error) {
-          reject(error);
-          return;
-        }
-        resolve(result);
-      })
-      .end(buffer);
-  });
+  const result: UploadApiResponse | undefined = await new Promise(
+    (resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          {},
+          function (
+            error: UploadApiErrorResponse | undefined,
+            result: UploadApiResponse | undefined,
+          ) {
+            if (error) {
+              reject(error);
+              return;
+            }
+            resolve(result);
+          },
+        )
+        .end(buffer);
+    },
+  );
   return result;
 }

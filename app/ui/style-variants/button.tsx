@@ -1,6 +1,6 @@
-import { tv } from 'tailwind-variants';
-import { colorPalette, fontSize } from '@/app/ui/style-variants/variables';
-import { alegreyaSans } from '@/app/ui/style-variants/fonts';
+import { tv } from "tailwind-variants";
+import { colorPalette, fontSize } from "@/app/ui/style-variants/variables";
+import { alegreyaSans } from "@/app/ui/style-variants/fonts";
 
 export const button = tv({
   base: `px-4 py-1.5 rounded-full hover:opacity-80 ${alegreyaSans.className} font-semibold`,
@@ -12,16 +12,16 @@ export const button = tv({
       danger: `${colorPalette.danger} hover:opacity-80`,
     },
     flat: {
-      true: 'bg-transparent'
+      true: "bg-transparent",
     },
     size: {
       sm: fontSize.sm,
       md: fontSize.md,
-      lg: fontSize.lg
-    }
+      lg: fontSize.lg,
+    },
   },
   defaultVariants: {
-    color: 'primary',
-    size: 'md'
-  }
+    color: "primary",
+    size: "md",
+  },
 });

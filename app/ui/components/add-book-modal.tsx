@@ -63,12 +63,7 @@ export default function AddBookModal({
         footer: modal().footer(),
       }}
     >
-      <form
-        id={form.id}
-        onSubmit={form.onSubmit}
-        action={action}
-        noValidate
-      >
+      <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
         <ModalContent>
           <ModalHeader>New Book</ModalHeader>
           <ModalBody>

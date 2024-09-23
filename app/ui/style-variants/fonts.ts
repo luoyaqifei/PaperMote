@@ -1,4 +1,4 @@
-import { Alegreya_Sans, Alegreya} from "next/font/google";
+import { Alegreya_Sans, Alegreya } from "next/font/google";
 
 export const alegreya = Alegreya({
   weight: ["400", "500", "600", "700", "800", "900"],
