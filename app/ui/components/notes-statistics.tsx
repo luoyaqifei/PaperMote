@@ -34,7 +34,7 @@ export default async function NotesStatistics({
           <Progress
             aria-label="Downloading..."
             size="md"
-            value={lastNote?.book_location}
+            value={lastNote?.book_location / book.page_count * 100}
             color="primary"
             showValueLabel={true}
             className="max-w-md"
