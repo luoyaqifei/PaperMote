@@ -1,6 +1,6 @@
 import { backgroundColor } from "@/app/ui/style-variants/variables";
 import BackgroundImage from "@/app/ui/components/background-image";
-import { BreadCrumbs } from "../ui/components/breadcrumbs";
+import { BreadCrumbs } from "@/app/ui/components/breadcrumbs";
 
 export default function DashboardLayout({
   children,

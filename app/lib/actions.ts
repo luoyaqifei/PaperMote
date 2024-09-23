@@ -7,9 +7,9 @@ import {
   LoginSchema,
   UpdateBookSchema,
   UpdateUserSchema,
-} from "./schema";
-import { saltAndHashPassword } from "./utils";
-import { generateAvatar } from "./client-utils";
+} from "@/app/lib/schema";
+import { saltAndHashPassword } from "@/app/lib/utils";
+import { generateAvatar } from "@/app/lib/client-utils";
 import { signIn, signOut, unstable_update } from "@/auth";
 import { AuthError } from "next-auth";
 import { generateFromEmail } from "unique-username-generator";

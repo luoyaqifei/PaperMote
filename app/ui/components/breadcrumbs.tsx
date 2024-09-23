@@ -4,7 +4,7 @@ import { Children, useMemo, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Spinner } from "@nextui-org/react";
-import { BreadCrumbsContext } from "./breadcrumbs-context";
+import { BreadCrumbsContext } from "@/app/ui/components/breadcrumbs-context";
 
 const BreadcrumbsItem = ({ children, href }: { children: ReactNode; href: string }) => (
   <li>

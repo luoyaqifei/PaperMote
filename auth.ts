@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials"
-import { getUserByEmail, getUserById } from "./app/lib/data";
-import { verifyPassword } from "./app/lib/utils";
-import { authConfig } from "./auth.config";
-import { User } from "./app/lib/definitions";
+import { getUserByEmail, getUserById } from "@/app/lib/data";
+import { verifyPassword } from "@/app/lib/utils";
+import { authConfig } from "@/auth.config";
+import { User } from "@/app/lib/definitions";
 
 export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   ...authConfig,

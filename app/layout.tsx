@@ -7,7 +7,6 @@ import { backgroundColor, textColor } from "@/app/ui/style-variants/variables";
 import { PresentationChartBarIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Sidenav from "@/app/ui/components/sidenav";
-import { BreadCrumbs } from "./ui/components/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "PaperMote",

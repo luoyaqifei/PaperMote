@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import { backgroundColor, borderColor, fontSize, textColor } from "./variables";
-import { alegreyaSans } from "./fonts";
+import { backgroundColor, borderColor, fontSize, textColor } from "@/app/ui/style-variants/variables";
+import { alegreyaSans } from "@/app/ui/style-variants/fonts";
 
 const slots = {
   input: `bg-transparent placeholder:text-default-700/50px-3 py-2 rounded-md transition-all duration-200 focus:ring-2 focus:ring-opacity-50 ${alegreyaSans.className}`,

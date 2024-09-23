@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import { colorPalette } from "./variables";
+import { colorPalette } from "@/app/ui/style-variants/variables";
 
 const slots = {
     base: `${colorPalette.base} rounded-lg shadow-lg overflow-hidden`,

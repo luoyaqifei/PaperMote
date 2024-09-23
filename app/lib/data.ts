@@ -1,7 +1,7 @@
 "use server";
 
 import { sql } from "@vercel/postgres";
-import { Book, BookFromApi, Note, User } from "./definitions";
+import { Book, BookFromApi, Note, User } from "@/app/lib/definitions";
 import { auth } from "@/auth";
 
 export const fetchBooks = async () => {

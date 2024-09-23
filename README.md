@@ -10,7 +10,7 @@ PaperMote is a web app that allows users to keep track of their paperbook notes 
 
 ### Slides
 
-If you want to see the presentation slides, please refer to [this link](https://luoyaqifei.github.io/PaperMote/) that is depoloyed on Github Pages, using the `gh-pages` branch of this repo.
+If you want to see the presentation slides, please refer to [this link](https://luoyaqifei.github.io/PaperMote/) that is depoloyed on Github Pages, using the `gh-pages` branch of this repo. Note: the slides are still under construction.
 
 ### Installation
 
@@ -52,8 +52,9 @@ PaperMote is designed for avid readers who want to keep track of their paperbook
 -   Create notes and annotations by book
 -   Upload a photo of your paperbook
 -   Add notes and annotations to your paperbook, with their location in the book
--   Edit notes and annotations
+-   Edit notes and annotations with rich text editing
 -   Delete notes and annotations
+-   Download metadata for books online
 
 ## Implementation
 
@@ -257,15 +258,12 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 ### Sprint 2: Frontend Development and Advanced Features (Week 2, from Sep 16 to Sep 22)
 -   Day 1-3: Add advanced features
     -   [x] Implement functionality to record and update notes at specific locations within books
-    -   [ ] Implement basic search functionality
-    -   [ ] Implement functionality to upload images of paperbooks
-    -   [ ] Implement functionality to sort notes by book location, last updated time, etc.
+    -   [x] Implement functionality to upload images of paperbooks
     -   [x] Add responsive design across all devices
 -   Day 4-5: Testing and Deployment Preparation
-    -   [ ] Conduct initial testing of all features
-    -   [ ] Fix any critical bugs
+    -   [x] Conduct initial testing of all features
+    -   [x] Fix any critical bugs
     -   [x] Refine UI/UX based on initial usage
-    -   [ ] Configure frontend build for production
     -   [x] Prepare for the deployment
 -  Day 6-7: Polish and Documentation
     -   [x] Implement additional features
