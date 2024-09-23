@@ -4,7 +4,7 @@ const UserSchema = z.object({
   id: z.string(),
   username: z.string().min(1, "Username is required"),
   email: z.string().email("Invalid email"),
-  password: z.string().min(8, "Password is required"),
+  password: z.string().min(8, "Password is required and must be at least 8 characters long"),
   avatar: z.string().url("Avatar is URL"),
 });
 
