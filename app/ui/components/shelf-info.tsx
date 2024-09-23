@@ -11,11 +11,11 @@ export default function ShelfInfo({ books }: { books: Book[] }) {
       <h2 className={`${fontSize.xl} font-semibold mb-2`}>Your Bookshelf Stats</h2>
       <Divider className="my-2" />
       <section className={`${fontSize.md} mb-2`}>
-        You have <Chip color="primary" variant="flat" size="lg">{books.length}</Chip> books in your shelf.
+        You have <Chip color="primary" variant="flat" size="lg">{books.length ?? 0}</Chip> {books.length === 1 ? "book" : "books"} in your shelf.
       </section>
-      <section className={`${fontSize.md}`}>
+      {books.length > 0 && <section className={`${fontSize.md}`}>
         The last book you edited is <Chip color="primary" variant="flat" size="lg">{books[0].title}</Chip>
-      </section>
+      </section>}
     </Statistics>
   );
 }

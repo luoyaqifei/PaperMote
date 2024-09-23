@@ -9,6 +9,7 @@ import {
 } from "@nextui-org/react";
 import { User } from "@/app/lib/definitions";
 import { signOutAction } from "@/app/lib/actions";
+import { CogIcon } from "@heroicons/react/24/outline";
 
 export function UserDropdown({ user }: { user: User}) {
   const handleSignOut = async () => {
@@ -40,7 +41,7 @@ export function UserDropdown({ user }: { user: User}) {
         <DropdownItem key="bookshelf" href="/dashboard">
           My Bookshelf
         </DropdownItem>
-        <DropdownItem key="profile" href="/dashboard/user-profile">
+        <DropdownItem key="profile" href="/dashboard/user-profile" startContent={<CogIcon className="w-4 h-4" />}>
           My Profile
         </DropdownItem>
         <DropdownItem key="logout" color="danger" onClick={handleSignOut}>

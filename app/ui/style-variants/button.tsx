@@ -9,6 +9,7 @@ export const button = tv({
       primary: `${colorPalette.primary} hover:opacity-80`,
       secondary: `${colorPalette.secondary} hover:opacity-80`,
       neutral: `${colorPalette.neutral} hover:opacity-80`,
+      danger: `${colorPalette.danger} hover:opacity-80`,
     },
     flat: {
       true: 'bg-transparent'

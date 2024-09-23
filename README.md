@@ -2,13 +2,15 @@
 
 ## Overview
 
-PaperMote is a web app that allows users to keep track of their paperbook notes and annotations.
+PaperMote is a web app that allows users to keep track of their paperbook notes and annotations. 
 
 ### Demo
 
-[Presentation](https://luoyaqifei.github.io/PaperMote/) is depoloyed on Github Pages, using the `gh-pages` branch of this repo.
+[The production site](https://paper-mote.vercel.app/) is deployed on Vercel, using the `main` branch of this repo. ![Vercel Deployment Status](https://vercelbadge.vercel.app/api/luoyaqifei/PaperMote)
 
-[Demo](https://paper-mote.vercel.app/) is deployed on Vercel, using the `main` branch of this repo. ![Vercel Deployment Status](https://vercelbadge.vercel.app/api/luoyaqifei/PaperMote)
+### Slides
+
+If you want to see the presentation slides, please refer to [this link](https://luoyaqifei.github.io/PaperMote/) that is depoloyed on Github Pages, using the `gh-pages` branch of this repo.
 
 ### Installation
 
@@ -50,7 +52,8 @@ PaperMote is designed for avid readers who want to keep track of their paperbook
 -   Create notes and annotations by book
 -   Upload a photo of your paperbook
 -   Add notes and annotations to your paperbook, with their location in the book
--   Search your notes and annotations
+-   Edit notes and annotations
+-   Delete notes and annotations
 
 ## Implementation
 
@@ -58,7 +61,7 @@ PaperMote is designed for avid readers who want to keep track of their paperbook
 
 -   Frontend and Backend: 
     -   Next.js and React, for functionalities
-    -   NextUI for UI components, Tailwind CSS and Tailwind Variants for style managements
+    -   NextUI for UI components, Tailwind CSS and Tailwind Variants for style managements, Heroicons for icons
 -   Database: Vercel Postgres
 -   Deployment: Vercel
 
@@ -71,15 +74,11 @@ This tech stack is chosen because of the innate support of React Server Renderin
 
 ### Sitemap
 
--   Homepage
--   Login
--   Signup
+-   Introduction Page
+-   Login / Signup
 -   Book List
 -   Book Notes
 -   Profile
--   Search
--   Upload
--   Settings
 
 ### Mockups
 

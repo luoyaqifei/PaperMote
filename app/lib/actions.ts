@@ -226,6 +226,20 @@ export async function updateBook(prevState: unknown, formData: FormData) {
   };
 }
 
+export async function deleteBook(id: string) {
+  try {
+    await sql`DELETE FROM notes WHERE book_id = ${id}`;
+    await sql`DELETE FROM books WHERE id = ${id}`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to delete book",
+      status: "error",
+    };
+  }
+  revalidatePath("/dashboard");
+  return { message: "Book deleted successfully", status: "success" };
+}
+
 export async function addNote(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
     schema: AddNoteSchema,
@@ -279,6 +293,19 @@ export async function updateNote(prevState: unknown, formData: FormData) {
   }
   revalidatePath(`/dashboard/books/${book_id}/edit-note/${id}`);
   return { message: `Note updated successfully`, status: "success" };
+}
+
+export async function deleteNote(id: string, book_id: string) {
+  try {
+    await sql`DELETE FROM notes WHERE id = ${id}`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to delete note",
+      status: "error",
+    };
+  }
+  revalidatePath(`/dashboard/books/${book_id}`);
+  return { message: "Note deleted successfully", status: "success" };
 }
 
 export async function uploadImage(formData: FormData) {

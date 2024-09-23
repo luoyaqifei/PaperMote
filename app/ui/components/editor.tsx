@@ -37,7 +37,7 @@ export default function Editor({
       StarterKit,
       UploadImage.configure({
         uploadFn: upLoadFn,
-		inline: true,
+        // inline: true,
       }),
     ],
     content: content,
@@ -55,41 +55,55 @@ export default function Editor({
   });
 
   return (
-    <Card className="button">
-      <section className="flex flex-wrap gap-2 mb-4">
+    <Card className="control-group">
+      <section className="flex flex-wrap gap-2 m-4 button-group">
         <Button
           size="sm"
+          className="w-8 h-8 flex m-0 p-0 min-w-0"
           startContent={<BoldIcon className="w-4 h-4" />}
           color={editor?.isActive("bold") ? "primary" : "default"}
           onClick={() => editor?.chain().focus().toggleBold().run()}
         ></Button>
         <Button
           size="sm"
+          className="w-8 h-8 flex m-0 p-0 min-w-0"
           startContent={<ItalicIcon className="w-4 h-4" />}
           color={editor?.isActive("italic") ? "primary" : "default"}
           onClick={() => editor?.chain().focus().toggleItalic().run()}
         ></Button>
         <Button
           size="sm"
+          className="w-8 h-8 flex m-0 p-0 min-w-0"
           startContent={<StrikethroughIcon className="w-4 h-4" />}
           color={editor?.isActive("strike") ? "primary" : "default"}
           onClick={() => editor?.chain().focus().toggleStrike().run()}
         ></Button>
         <Button
           size="sm"
+          className="w-8 h-8 flex m-0 p-0 min-w-0"
           startContent={<ArrowUturnLeftIcon className="w-4 h-4" />}
           onClick={() => editor?.chain().focus().undo().run()}
         ></Button>
         <Button
           size="sm"
+          className="w-8 h-8 flex m-0 p-0 min-w-0"
           startContent={<ArrowUturnRightIcon className="w-4 h-4" />}
           onClick={() => editor?.chain().focus().redo().run()}
         ></Button>
         <Button
           size="sm"
+          className="w-8 h-8 flex m-0 p-0 min-w-0"
           startContent={<PhotoIcon className="w-4 h-4" />}
           onClick={() => editor?.chain().focus().addImage().run()}
         ></Button>
+        <Button
+          size="sm"
+          className="w-8 h-8 flex m-0 p-0 min-w-0 items-start justify-center"
+          color={editor?.isActive("blockquote") ? "primary" : "default"}
+          onClick={() => editor?.chain().focus().toggleBlockquote().run()}
+        >
+          <div className="w-4 h-4 text-xl font-bold">"</div>
+        </Button>
       </section>
       <EditorContent
         editor={editor}
