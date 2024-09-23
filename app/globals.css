@@ -10,7 +10,33 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  blockquote {
+    @apply border-l-4 border-gray-500 pl-4;
+  }
+  ul {
+    @apply list-inside;
+  }
+  ul li {
+    @apply list-disc;
+  }
+  /* ol { 
+    list-style-type: decimal; 
+    list-style-position: inside; 
+    @apply list-decimal list-inside;
+ }
+ ul ul, ol ul { 
+    list-style-type: circle; 
+    list-style-position: inside; 
+    @apply list-circle list-inside;
+ }
+ ol ol, ul ol { 
+    list-style-type: lower-latin; 
+    list-style-position: inside; 
+    @apply list-lower-latin list-inside;
+ } */
 }
 
 @layer utilities {

@@ -9,12 +9,19 @@ export default function AddBook() {
 
   return (
     <>
-    <BookCard backgroundImage={""}>
-      <Button onClick={onOpen} className={button({color: "secondary", size: "lg"})}>
-        + New Book
-      </Button>
-    </BookCard>
-      <AddBookModal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose} />
+      <BookCard backgroundImage={""}>
+        <Button
+          onClick={onOpen}
+          className={button({ color: "secondary", size: "lg" })}
+        >
+          + New Book
+        </Button>
+      </BookCard>
+      <AddBookModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        onClose={onClose}
+      />
     </>
-  )
+  );
 }

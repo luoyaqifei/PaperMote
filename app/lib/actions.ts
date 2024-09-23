@@ -7,16 +7,21 @@ import {
   LoginSchema,
   UpdateBookSchema,
   UpdateUserSchema,
-} from "./schema";
-import { saltAndHashPassword } from "./utils";
-import { generateAvatar } from "./client-utils";
+} from "@/app/lib/schema";
+import { saltAndHashPassword } from "@/app/lib/utils";
+import { generateAvatar } from "@/app/lib/client-utils";
 import { signIn, signOut, unstable_update } from "@/auth";
 import { AuthError } from "next-auth";
 import { generateFromEmail } from "unique-username-generator";
 import { parseWithZod } from "@conform-to/zod";
-import { SignupSchema } from "./schema";
-import { BookFromApi, User } from "./definitions";
-import { getCurrentUser } from "./data";
+import { SignupSchema, UpdateNoteSchema } from "@/app/lib/schema";
+import { BookFromApi, User } from "@/app/lib/definitions";
+import { getCurrentUser, getUserByEmail } from "@/app/lib/data";
+import {
+  v2 as cloudinary,
+  UploadApiErrorResponse,
+  UploadApiResponse,
+} from "cloudinary";
 
 export async function signup(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
@@ -98,13 +103,21 @@ export async function updateUser(prevState: unknown, formData: FormData) {
   if (submission.status !== "success") {
     return submission.reply();
   }
-  // TODO: check if email is already taken
   const { username, email, id } = submission.value;
+
+  const existingUser = await getUserByEmail(email);
+  if (existingUser && existingUser.id !== id) {
+    return {
+      message: "Email is already taken",
+      status: "error",
+    };
+  }
+
   try {
     const users = await sql<User>`
     UPDATE users 
     SET email = ${email}, username = ${username}, avatar = ${generateAvatar(
-      username
+      username,
     )}
     WHERE id = ${id} RETURNING *`;
     unstable_update({ user: users.rows[0] });
@@ -157,7 +170,9 @@ export async function updateBookFromApi(book: BookFromApi, book_id: string) {
     title: book.title,
     author: book.authors?.join(", "),
     description: book.description,
-    published_date: book.publishedDate ? new Date(book.publishedDate).toLocaleDateString() : "",
+    published_date: book.publishedDate
+      ? new Date(book.publishedDate).toLocaleDateString()
+      : "",
     page_count: book.pageCount ?? "",
     cover: book.imageLinks?.thumbnail ?? "/book-cover.png",
     updated_at: new Date().toISOString(),
@@ -180,7 +195,10 @@ export async function updateBookFromApi(book: BookFromApi, book_id: string) {
     };
   }
   revalidatePath(`/dashboard/books/${book_id}`);
-  return { message: "Book information updated successfully", status: "success" };
+  return {
+    message: "Book information updated successfully",
+    status: "success",
+  };
 }
 
 export async function updateBook(prevState: unknown, formData: FormData) {
@@ -206,7 +224,24 @@ export async function updateBook(prevState: unknown, formData: FormData) {
     };
   }
   revalidatePath(`/dashboard/books/${id}`);
-  return { message: "Book information updated successfully", status: "success" };
+  return {
+    message: "Book information updated successfully",
+    status: "success",
+  };
+}
+
+export async function deleteBook(id: string) {
+  try {
+    await sql`DELETE FROM notes WHERE book_id = ${id}`;
+    await sql`DELETE FROM books WHERE id = ${id}`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to delete book",
+      status: "error",
+    };
+  }
+  revalidatePath("/dashboard");
+  return { message: "Book deleted successfully", status: "success" };
 }
 
 export async function addNote(prevState: unknown, formData: FormData) {
@@ -217,13 +252,14 @@ export async function addNote(prevState: unknown, formData: FormData) {
   if (submission.status !== "success") {
     return submission.reply();
   }
-  console.log(submission.value);
   const { title, content, book_id, book_location } = submission.value;
+  const created_at = new Date().toISOString();
+  const updated_at = created_at;
 
   try {
     await sql`
-      INSERT INTO notes (title, content, book_id, book_location)
-      VALUES (${title}, ${content}, ${book_id}, ${book_location})
+      INSERT INTO notes (title, content, book_id, book_location, created_at, updated_at)
+      VALUES (${title}, ${content}, ${book_id}, ${book_location}, ${created_at}, ${updated_at})
     `;
   } catch (error) {
     console.log(error);
@@ -235,4 +271,69 @@ export async function addNote(prevState: unknown, formData: FormData) {
 
   revalidatePath(`/dashboard/books/${book_id}`);
   return { message: "Note added successfully", status: "success" };
+}
+
+export async function updateNote(prevState: unknown, formData: FormData) {
+  const submission = parseWithZod(formData, {
+    schema: UpdateNoteSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+  const { title, content, book_id, book_location, id } = submission.value;
+  const updated_at = new Date().toISOString();
+  try {
+    await sql`
+      UPDATE notes
+      SET title = ${title}, content = ${content},book_location = ${book_location}, updated_at = ${updated_at}
+      WHERE id = ${id}
+    `;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to update note",
+      status: "error",
+    };
+  }
+  revalidatePath(`/dashboard/books/${book_id}/edit-note/${id}`);
+  return { message: `Note updated successfully`, status: "success" };
+}
+
+export async function deleteNote(id: string, book_id: string) {
+  try {
+    await sql`DELETE FROM notes WHERE id = ${id}`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to delete note",
+      status: "error",
+    };
+  }
+  revalidatePath(`/dashboard/books/${book_id}`);
+  return { message: "Note deleted successfully", status: "success" };
+}
+
+export async function uploadImage(formData: FormData) {
+  const file = formData.get("file") as File;
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = new Uint8Array(arrayBuffer);
+  const result: UploadApiResponse | undefined = await new Promise(
+    (resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          {},
+          function (
+            error: UploadApiErrorResponse | undefined,
+            result: UploadApiResponse | undefined,
+          ) {
+            if (error) {
+              reject(error);
+              return;
+            }
+            resolve(result);
+          },
+        )
+        .end(buffer);
+    },
+  );
+  return result;
 }

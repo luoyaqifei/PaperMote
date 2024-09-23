@@ -78,7 +78,7 @@ export default function EditBook({ book }: { book: Book }) {
                 classNames={{
                   input: input().input(),
                   label: input().label(),
-                  inputWrapper: input().inputWrapper()
+                  inputWrapper: input().inputWrapper(),
                 }}
                 label="Title"
                 key={fields.title.key}
@@ -92,7 +92,7 @@ export default function EditBook({ book }: { book: Book }) {
                 classNames={{
                   input: input().input(),
                   label: input().label(),
-                  inputWrapper: input().inputWrapper()
+                  inputWrapper: input().inputWrapper(),
                 }}
                 label="Author"
                 key={fields.author.key}
@@ -106,7 +106,7 @@ export default function EditBook({ book }: { book: Book }) {
                 classNames={{
                   input: input().input(),
                   label: input().label(),
-                  inputWrapper: input().inputWrapper()
+                  inputWrapper: input().inputWrapper(),
                 }}
                 label="Description"
                 key={fields.description.key}
@@ -124,13 +124,13 @@ export default function EditBook({ book }: { book: Book }) {
               />
             </ModalBody>
             <ModalFooter>
-                <Button
-                    type="button"
-                    className={button({ color: "neutral", flat: true })}
-                    onClick={() => setIsOpen(false)}
-                >
-                    Cancel
-                </Button>
+              <Button
+                type="button"
+                className={button({ color: "neutral", flat: true })}
+                onClick={() => setIsOpen(false)}
+              >
+                Cancel
+              </Button>
               <Button
                 type="submit"
                 className={button({ color: "primary" })}
