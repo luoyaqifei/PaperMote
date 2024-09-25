@@ -1,40 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
-		<title>reveal.js</title>
+    <title>Paper Mote</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+			<section>
+				<p>Hi there!</p>
+				<p>Welcome to the <strong>Paper Mote</strong> presentation.</p>
+			</section>
+			<section>
+				<p>
+					Paper Mote is where you can manage your paperbook notes
+				</p>
+				<p class="fragment highlight-red">
+					is your digital reading companion
+				</p>
+			</section>
+			<section>
+				<img src="placard.jpg" />
+			</section>
+        </section>
+        <section>
+				<iframe
+				src="https://paper-mote.vercel.app/dashboard"
+				width="1200px"
+				height="800px"
+				style="border: none; z-index: 1000"
+			  ></iframe>
+        </section>
+		<section>
+			<h2>Tech Stack</h2>
+			<p><span style="display: inline-block;" class="fragment grow highlight-red">No</span> frontend and backend frameworks!</p>
+			<p class="fragment grow">Full stack framework based on React: <span class="fragment highlight-red">Next.js</span></p>
+			<p class="fragment fade-down"><span class="fragment">No CSS/SCSS files</span></p>
+			<p class="fragment shrink highlight-yellow">Tailwind CSS and Next UI components</p>
+			<p class="fragment shrink">Auth.js for authentication</p>
+			<p class="fragment fade-out">Editor Library: TipTap</p>
+			<p class="fragment fade-in-then-out">Database: Vercel Postgres</p>
+			<p class="fragment fade-in-then-semi-out">Vercel</p>
+			<p>Highlight <span class="fragment highlight-red">red</span> <span class="fragment highlight-blue">blue</span> <span class="fragment highlight-green">green</span></p>
+		</section>
+      </div>
+    </div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
 </html>
