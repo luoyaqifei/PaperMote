@@ -43,3 +43,8 @@ public/workbox-*.js
 
 # Optional: Storybook build output
 storybook-static
+
+public/sw*
+public/swe-worker*
+
+certificates
