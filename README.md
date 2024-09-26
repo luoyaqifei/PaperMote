@@ -280,7 +280,7 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 - Day 6-7: Polish and Documentation
   - [x] Implement additional features
   - [x] Add more detailed documentation
-
+  - [x] Turn the app into a PWA
 ---
 
 ## Future Implementations
@@ -296,5 +296,4 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 - Automatically resume taking notes for a book from where you left off
 - Tag everything in the system: books, notes, users, etc.
 - Add a variety of visualizations for books display in user's dashboard
-- Turn the app into a PWA
 - Use Electron to create a desktop version of the app
