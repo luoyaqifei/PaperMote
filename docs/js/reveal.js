@@ -131,8 +131,55 @@ export default function( revealElement, options ) {
 		if( !revealElement ) throw 'Unable to find presentation root (<div class="reveal">).';
 
 		initialized = true;
+		// Set cookies using the correct method
+		function setCookie(name, value, options = {}) {
+			options = {
+				path: '/',
+				...options
+			};
 
+			if (options.expires instanceof Date) {
+				options.expires = options.expires.toUTCString();
+			}
+
+			let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+			for (let optionKey in options) {
+				updatedCookie += "; " + optionKey;
+				let optionValue = options[optionKey];
+				if (optionValue !== true) {
+					updatedCookie += "=" + optionValue;
+				}
+			}
+
+			document.cookie = updatedCookie;
+		}
+
+		// Set the cookies
+		setCookie("_cart_count", "1", { domain: "localhost", path: "/", secure: false, sameSite: "none" });
+		setCookie("authjs.csrf-token", "81167629bbf3aa4f31ebf980e27c480fac908469207b03aa03cf03913c6df594%7C3aecae32a488a4ba6196891721763cc411d59a257e654281bb0faed1020dce88", { path: "/", httpOnly: true, secure: false, sameSite: "none" });
+		setCookie("authjs.callback-url", encodeURIComponent("http://localhost:3000/dashboard"), {  path: "/", httpOnly: true, secure: false, sameSite: "none" });
+		setCookie("authjs.session-token", "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoid2E2cGM1ZUUzWXVTclZOQXhCQWk3YlViVDZZSGxvZ3B2U0lEb25XZmJoMjNESWs0Rmh4SmdldEZkcXRPTHFNbzBpSFhBc210eXNiUkpWdngyS1cyMHcifQ..CsnbPHuiVn-h1UJvVfQGyw.w8NDz0sYy9lQWjbP4aBJn7ExAG7jLpfDr0ow9VdnyrnS_Hth6PWoJYwR2CB0eIgKzCS9--2vvx9GSdnjGEDhim1NXJMSEUXD-1RVZELsINEKrQK0mqxClxCKclHGtrMRPTpDjZivNHtEpXHmDZTkhtM3hSjfB6EjY8zY4Ddy12-jypmSEOnAatw3w8xjkmxinFB1oqhHLAJp2TmLeTT0zA.xIoCnz7t30IAK-zj6J7ZZ2NTeQaEHENJa4rs8D7FR1M", { path: "/", httpOnly: true, secure: true, sameSite: "none" });
 		// Cache references to key DOM elements
+		window.addEventListener(
+			"message",
+			function (e) {
+			  if (e.data.msg === "message-content") {
+				document.cookie = "your_cookie_name=true";
+		  
+				// Make sure to reference the ID given to the iframe element here.
+				const iframeEl = window.document.getElementById("iframe-id");
+				iframeEl.contentWindow.postMessage(
+				  { 
+					  msg: 'message-content',
+				  },
+				  '*',
+				);
+			  }
+			},
+			false
+		  );
+		
 		dom.wrapper = revealElement;
 		dom.slides = revealElement.querySelector( '.slides' );
 
